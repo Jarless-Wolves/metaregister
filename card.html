@@ -516,7 +516,7 @@ function drawRadar(char) {
   const svg = document.getElementById('radarChart');
   svg.innerHTML = '';
 
-  const cx = 150, cy = 150, maxR = 130;
+  const cx = 150, cy = 150, maxR = 65;
   const rings = 11;
   const ringColors = [
     '#8B0000','#B43C00','#DC3C00','#EB5F00','#F27D00',
@@ -617,6 +617,35 @@ function drawRadar(char) {
   border.setAttribute('stroke', '#111');
   border.setAttribute('stroke-width', '1.5');
   svg.appendChild(border);
+
+  const descriptors = ['Terrible','Poor','Mediocre','Average','Fair','Good','Great','Superb','Fantastic','Epic','Legendary','Cosmic'];
+
+stats.forEach(stat => {
+  const val = Math.min(Math.max(parseInt(char[stat.key]) || 0, 0), 11);
+  const pt = ptOnAxis(stat.angle, maxR + 18);
+  
+  const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+  label.setAttribute('x', pt.x);
+  label.setAttribute('y', pt.y);
+  label.setAttribute('text-anchor', 'middle');
+  label.setAttribute('dominant-baseline', 'middle');
+  label.setAttribute('font-family', 'Red Circle, sans-serif');
+  label.setAttribute('font-size', '9');
+  label.setAttribute('fill', '#111');
+  label.textContent = `${stat.label.toUpperCase()} ${val}`;
+  svg.appendChild(label);
+
+  const desc = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+  desc.setAttribute('x', pt.x);
+  desc.setAttribute('y', pt.y + 11);
+  desc.setAttribute('text-anchor', 'middle');
+  desc.setAttribute('dominant-baseline', 'middle');
+  desc.setAttribute('font-family', 'Lucida Sans, sans-serif');
+  desc.setAttribute('font-size', '7');
+  desc.setAttribute('fill', '#111');
+  desc.textContent = descriptors[val] || '';
+  svg.appendChild(desc);
+});
 }
     
     async function loadCharacters() {
