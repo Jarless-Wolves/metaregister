@@ -99,7 +99,7 @@
       nameCol.className = 'card-name';
 
       const name = char.name || '';
-      const letters = name.replace(/ /g, '').length;
+      const letters = name.replace(/ /g, '').replace(/[^a-zA-Z0-9]/g, '').length;
       const spaces = (name.match(/ /g) || []).length;
       const availableHeight = 380 - 24;
       let fontSize = letters > 0 ? availableHeight / (letters + spaces * 0.4) : 32;
@@ -113,6 +113,8 @@
           const sp = document.createElement('span');
           sp.className = 'space';
           nameCol.appendChild(sp);
+        } else if (/[^a-zA-Z0-9]/.test(ch)) {
+          // skip punctuation
         } else {
           const span = document.createElement('span');
           span.className = 'letter';
