@@ -212,7 +212,7 @@
     .sheet-middle {
   display: flex;
   gap: 10px;
-  height: 46%;
+  height: 44%;
   flex-shrink: 0;
 }
 
@@ -243,7 +243,7 @@
 .sheet-bottom {
   display: flex;
   gap: 10px;
-  height: 43.5%;
+  height: 47%;
   flex-shrink: 0;
 }
 
@@ -353,8 +353,6 @@
             <div class="sheet-powers">
               <div class="sheet-section-title">Powers</div>
               <div class="powers-text" id="powerText"></div>
-              <div class="bio-label" style="margin-top: 6px; font-size: 0.65em;">Vulnerabilities</div>
-              <div class="powers-text" id="vulnerText"></div>
             </div>
             <div class="sheet-ability">
               <div class="sheet-section-title">Ability Profile</div>
@@ -425,8 +423,9 @@
       document.getElementById('bioTrauma').textContent = char.trauma || '';
       document.getElementById('bioBackground').textContent = char.short_bio || '';
       document.getElementById('modalOverlay').classList.add('active');
-      document.getElementById('powerText').textContent = char.powers || '';
-      document.getElementById('vulnerText').textContent = char.vulnerabilities || '';
+      const powers = char.powers || '';
+      const vulner = char.vulnerabilities || '';
+      document.getElementById('powerText').textContent = powers + (vulner ? '\n\n' + vulner : '');
     }
 
     // Close modal
