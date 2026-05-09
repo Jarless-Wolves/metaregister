@@ -204,6 +204,37 @@
       letter-spacing: 0.05em;
       text-transform: uppercase;
     }
+
+    .sheet-middle {
+  display: flex;
+  gap: 10px;
+  height: 43%;
+  flex-shrink: 0;
+}
+
+.sheet-bio {
+  width: 54%;
+  border: 3px solid #111;
+  border-radius: 12px;
+  padding: 8px;
+}
+
+.sheet-portrait {
+  flex: 1;
+  border: 3px solid #111;
+  border-radius: 12px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.sheet-section-title {
+  font-family: 'Red Circle', sans-serif;
+  font-size: 1em;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: center;
+}
   </style>
 </head>
 <body>
@@ -217,6 +248,12 @@
         <!-- Sheet content will go here -->
         <div class="sheet">
           <div class="sheet-title" id="sheetTitle">Ever Star</div>
+          <div class="sheet-middle">
+            <div class="sheet-bio">
+            <div class="sheet-section-title">Biographical Data</div>
+            </div>
+            <div class="sheet-portrait"></div>
+          </div>
         </div>
       </div>
       <div class="modal-buttons">
@@ -267,6 +304,7 @@
       currentIndex = index;
       const char = characters[index];
       document.getElementById('sheetTitle').textContent = char.name;
+      document.querySelector('.sheet-portrait').style.backgroundImage = char.pic_url ? `url('${char.pic_url}')` : '';
       document.getElementById('modalOverlay').classList.add('active');
     }
 
