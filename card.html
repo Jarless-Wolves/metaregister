@@ -595,18 +595,19 @@ function drawRadar(char) {
     svg.appendChild(circle);
   }
 
-  // Axis lines
-  stats.forEach(stat => {
-    const pt = ptOnAxis(stat.angle, maxR);
-    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-    line.setAttribute('x1', cx);
-    line.setAttribute('y1', cy);
-    line.setAttribute('x2', pt.x);
-    line.setAttribute('y2', pt.y);
-    line.setAttribute('stroke', '#111');
-    line.setAttribute('stroke-width', '1');
-    svg.appendChild(line);
-  });
+  // Axis lines - fixed at 45 degree increments
+const axisAngles = [-135, -90, -45, 0, 45, 90, 135, 180];
+axisAngles.forEach(angle => {
+  const pt = ptOnAxis(angle, maxR);
+  const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+  line.setAttribute('x1', cx);
+  line.setAttribute('y1', cy);
+  line.setAttribute('x2', pt.x);
+  line.setAttribute('y2', pt.y);
+  line.setAttribute('stroke', '#111');
+  line.setAttribute('stroke-width', '1');
+  svg.appendChild(line);
+});
 
   // Outer border
   const border = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
