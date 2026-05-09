@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MetaRegister — Card Prototype</title>
+  <title>MetaRegister</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600&display=swap');
 
@@ -21,6 +21,7 @@
       padding: 40px;
     }
 
+    /* === CARDS === */
     .card {
       display: flex;
       flex-direction: row;
@@ -78,22 +79,197 @@
       position: relative;
     }
 
-    .card-image::after {
-      content: '';
-      position: absolute;
+    /* === MODAL OVERLAY === */
+    .modal-overlay {
+      display: none;
+      position: fixed;
       inset: 0;
+      background: rgba(0,0,0,0.75);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    /* === MODAL === */
+    .modal {
+      background: #f0f0f0;
+      border: 2px solid #222;
+      box-shadow: 8px 10px 24px rgba(15, 22, 30, 0.9);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* Tab bar */
+    .modal-tabs {
+      background: #222;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+
+    /* Close button */
+    .modal-close {
+      position: absolute;
+      top: 6px;
+      right: 10px;
+      background: none;
+      border: none;
+      color: #888;
+      font-size: 18px;
+      cursor: pointer;
+      line-height: 1;
+      z-index: 10;
+    }
+
+    .modal-close:hover {
+      color: #ccc;
+    }
+
+    /* Sheet content */
+    .modal-sheet {
+      flex: 1;
+      background: #fff;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #333;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 18px;
+    }
+
+    /* Bottom buttons */
+    .modal-buttons {
+      background: #222;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      flex-shrink: 0;
+    }
+
+    .modal-btn {
+      background: none;
+      border: 1px solid #555;
+      color: #ccc;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 16px;
+      padding: 4px 14px;
+      cursor: pointer;
+      letter-spacing: 0.05em;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .modal-btn:hover {
+      background: #444;
+      color: #fff;
+    }
+
+    .modal-btn.admin {
+      color: #888;
+      border-color: #444;
+      cursor: default;
     }
   </style>
 </head>
 <body>
 
+  <!-- Modal -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modal">
+      <div class="modal-tabs"></div>
+      <button class="modal-close" id="modalClose">✕</button>
+      <div class="modal-sheet" id="modalSheet">
+        <!-- Sheet content will go here -->
+        Character sheet coming soon.
+      </div>
+      <div class="modal-buttons">
+        <button class="modal-btn" id="btnPrev">◀ Prev</button>
+        <button class="modal-btn admin">New</button>
+        <button class="modal-btn admin">Delete</button>
+        <button class="modal-btn admin">Publish</button>
+        <button class="modal-btn" id="btnNext">Next ▶</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     const SUPABASE_URL = 'https://aopklhrfxtyhglznelua.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_9pr1docO_yBUsM4KRy09Dw_hrZF__E9';
 
-    function buildCard(char) {
+    let characters = [];
+    let currentIndex = 0;
+
+    // Size modal to 8.5x11 proportions fitting the screen
+    function sizeModal() {
+      const modal = document.getElementById('modal');
+      const tabsH = 36;
+      const buttonsH = 44;
+      const padding = 40;
+      const ratio = 11 / 8.5;
+
+      const maxW = window.innerWidth - padding * 2;
+      const maxH = window.innerHeight - padding * 2;
+
+      let sheetH = maxH - tabsH - buttonsH;
+      let sheetW = sheetH / ratio;
+
+      if (sheetW > maxW) {
+        sheetW = maxW;
+        sheetH = sheetW * ratio;
+      }
+
+      modal.style.width = sheetW + 'px';
+      modal.style.height = (sheetH + tabsH + buttonsH) + 'px';
+    }
+
+    window.addEventListener('resize', sizeModal);
+    sizeModal();
+
+    // Open modal
+    function openModal(index) {
+      currentIndex = index;
+      const char = characters[index];
+      document.getElementById('modalSheet').textContent = char.name;
+      document.getElementById('modalOverlay').classList.add('active');
+    }
+
+    // Close modal
+    document.getElementById('modalClose').addEventListener('click', () => {
+      document.getElementById('modalOverlay').classList.remove('active');
+    });
+
+    document.getElementById('modalOverlay').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('modalOverlay')) {
+        document.getElementById('modalOverlay').classList.remove('active');
+      }
+    });
+
+    // Prev / Next
+    document.getElementById('btnPrev').addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + characters.length) % characters.length;
+      openModal(currentIndex);
+    });
+
+    document.getElementById('btnNext').addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % characters.length;
+      openModal(currentIndex);
+    });
+
+    // Build card
+    function buildCard(char, index) {
       const card = document.createElement('div');
       card.className = 'card';
+      card.addEventListener('click', () => openModal(index));
 
       const nameCol = document.createElement('div');
       nameCol.className = 'card-name';
@@ -150,7 +326,8 @@
           document.body.innerHTML = '<p style="color:red">Error: ' + JSON.stringify(data) + '</p>';
           return;
         }
-        data.forEach(buildCard);
+        characters = data;
+        data.forEach((char, i) => buildCard(char, i));
       } catch (err) {
         document.body.innerHTML = '<p style="color:red">Error: ' + err.message + '</p>';
       }
