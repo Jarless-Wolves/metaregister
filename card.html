@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MetaRegister — Card Prototype</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      font-family: 'Barlow Condensed', sans-serif;
+      gap: 24px;
+      flex-wrap: wrap;
+      padding: 40px;
+    }
+
+    .card {
+      display: flex;
+      flex-direction: row;
+      width: 260px;
+      height: 380px;
+      background: #1a1a1a;
+      border: 1px solid #333;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+    }
+
+    .card-name {
+      font-family: 'Bebas Neue', sans-serif;
+      color: #111;
+      background: #fff;
+      padding: 12px 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      min-width: 44px;
+      max-width: 44px;
+      border-right: 3px solid #111;
+      position: relative;
+      z-index: 2;
+      line-height: 1.0;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .card-name .letter {
+      display: block;
+      text-align: center;
+      width: 100%;
+    }
+
+    .card-name .space {
+      display: block;
+      height: 0.4em;
+    }
+
+    .card-image {
+      flex: 1;
+      background-size: cover;
+      background-position: top center;
+      position: relative;
+    }
+
+    .card-image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 40%);
+    }
+  </style>
+</head>
+<body>
+
+  <script>
+    const SUPABASE_URL = 'https://aopklhrfxtyhglznelua.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_9pr1docO_yBUsM4KRy09Dw_hrZF__E9';
+
+    function buildCard(char) {
+      const card = document.createElement('div');
+      card.className = 'card';
+
+      const nameCol = document.createElement('div');
+      nameCol.className = 'card-name';
+
+      const name = char.name || '';
+      const letters = name.replace(/ /g, '').length;
+      const spaces = (name.match(/ /g) || []).length;
+      const availableHeight = 380 - 24;
+      let fontSize = letters > 0 ? availableHeight / (letters + spaces * 0.4) : 32;
+      fontSize = Math.min(fontSize, 32);
+      fontSize = Math.max(fontSize, 8);
+      nameCol.style.fontSize = fontSize + 'px';
+
+      for (let i = 0; i < name.length; i++) {
+        const ch = name[i];
+        if (ch === ' ') {
+          const sp = document.createElement('span');
+          sp.className = 'space';
+          nameCol.appendChild(sp);
+        } else {
+          const span = document.createElement('span');
+          span.className = 'letter';
+          span.textContent = ch;
+          nameCol.appendChild(span);
+        }
+      }
+
+      const imgCol = document.createElement('div');
+      imgCol.className = 'card-image';
+      if (char.pic_url) {
+        imgCol.style.backgroundImage = `url('${char.pic_url}')`;
+      }
+
+      card.appendChild(nameCol);
+      card.appendChild(imgCol);
+      document.body.appendChild(card);
+    }
+
+    async function loadCharacters() {
+      try {
+        const response = await fetch(
+          `${SUPABASE_URL}/rest/v1/mhr_characters?publish=eq.true&select=*`,
+          {
+            headers: {
+              'apikey': SUPABASE_KEY,
+              'Authorization': `Bearer ${SUPABASE_KEY}`
+            }
+          }
+        );
+        const data = await response.json();
+        if (!Array.isArray(data)) {
+          document.body.innerHTML = '<p style="color:red">Error: ' + JSON.stringify(data) + '</p>';
+          return;
+        }
+        data.forEach(buildCard);
+      } catch (err) {
+        document.body.innerHTML = '<p style="color:red">Error: ' + err.message + '</p>';
+      }
+    }
+
+    loadCharacters();
+  </script>
+</body>
+</html>
