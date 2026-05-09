@@ -265,7 +265,7 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
-  font-size: 0.75em;
+  font-size: 0.65em;
   margin-top: 4px;
 }
 
@@ -322,6 +322,7 @@
                   <div class="bio-row"><span class="bio-label">Eyes</span><span class="bio-value" id="bioEyes"></span></div>
                   <div class="bio-row"><span class="bio-label">Height</span><span class="bio-value" id="bioHeight"></span></div>
                   <div class="bio-row"><span class="bio-label">Weight</span><span class="bio-value" id="bioWeight"></span></div>
+                  <div class="bio-row"><span class="bio-label">Age</span><span class="bio-value" id="bioAge"></span></div>
                 </div>
                 <div class="bio-group">
                   <div class="bio-row"><span class="bio-label">Occupation</span><span class="bio-value" id="bioOccupation"></span></div>
@@ -407,6 +408,7 @@
       document.getElementById('bioEyes').textContent = char.eyes || '';
       document.getElementById('bioHeight').textContent = char.height || '';
       document.getElementById('bioWeight').textContent = char.weight || '';
+      document.getElementById('bioAge').textContent = char.age || '';
       document.getElementById('bioOccupation').textContent = char.occupation || '';
       document.getElementById('bioStatus').textContent = char.status || '';
       document.getElementById('bioOperations').textContent = char.area_of_operations || '';
