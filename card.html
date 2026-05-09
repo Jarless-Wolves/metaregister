@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MetaRegister</title>
   <style>
+    @font-face {
+      font-family: 'Red Circle';
+      src: url('REDCIRCL.ttf') format('truetype');
+    }
+    
     @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600&display=swap');
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -139,11 +144,8 @@
       background: #fff;
       overflow: hidden;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #333;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 18px;
+      padding: 0;
+      overflow: hidden;
     }
 
     /* Bottom buttons */
@@ -179,6 +181,27 @@
       border-color: #444;
       cursor: default;
     }
+
+    .sheet {
+      width: 100%;
+      height: 100%;
+      background: #fff;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .sheet-title {
+      border: 3px solid #111;
+      border-radius: 12px;
+      text-align: center;
+      font-family: 'Red Circle', sans-serif;
+      font-size: 2.8em;
+      padding: 8px 0;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
   </style>
 </head>
 <body>
@@ -190,7 +213,9 @@
       <button class="modal-close" id="modalClose">✕</button>
       <div class="modal-sheet" id="modalSheet">
         <!-- Sheet content will go here -->
-        Character sheet coming soon.
+        <div class="sheet">
+          <div class="sheet-title" id="sheetTitle">Ever Star</div>
+        </div>
       </div>
       <div class="modal-buttons">
         <button class="modal-btn" id="btnPrev">◀ Prev</button>
@@ -239,7 +264,7 @@
     function openModal(index) {
       currentIndex = index;
       const char = characters[index];
-      document.getElementById('modalSheet').textContent = char.name;
+      document.getElementById('sheetTitle').textContent = char.name;
       document.getElementById('modalOverlay').classList.add('active');
     }
 
