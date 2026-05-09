@@ -260,7 +260,45 @@
   border-radius: 12px;
   padding: 8px;
 }
-    </style>
+
+.bio-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.75em;
+  margin-top: 4px;
+}
+
+.bio-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 4px;
+}
+
+.bio-row {
+  display: flex;
+  gap: 6px;
+}
+
+.bio-label {
+  font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
+  font-weight: bold;
+  min-width: 70px;
+  flex-shrink: 0;
+}
+
+.bio-value {
+  font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
+}
+
+.bio-description {
+  margin-top: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+  </style>
+  
 </head>
 <body>
 
@@ -276,6 +314,31 @@
           <div class="sheet-middle">
             <div class="sheet-bio">
             <div class="sheet-section-title">Biographical Data</div>
+              <div class="bio-fields">
+                <div class="bio-group">
+                  <div class="bio-row"><span class="bio-label">Identity</span><span class="bio-value" id="bioIdentity"></span></div>
+                  <div class="bio-row"><span class="bio-label">Skin</span><span class="bio-value" id="bioSkin"></span></div>
+                  <div class="bio-row"><span class="bio-label">Hair</span><span class="bio-value" id="bioHair"></span></div>
+                  <div class="bio-row"><span class="bio-label">Eyes</span><span class="bio-value" id="bioEyes"></span></div>
+                  <div class="bio-row"><span class="bio-label">Height</span><span class="bio-value" id="bioHeight"></span></div>
+                  <div class="bio-row"><span class="bio-label">Weight</span><span class="bio-value" id="bioWeight"></span></div>
+                </div>
+                <div class="bio-group">
+                  <div class="bio-row"><span class="bio-label">Occupation</span><span class="bio-value" id="bioOccupation"></span></div>
+                </div>
+                <div class="bio-group">
+                  <div class="bio-row"><span class="bio-label">Status</span><span class="bio-value" id="bioStatus"></span></div>
+                  <div class="bio-row"><span class="bio-label">Operations</span><span class="bio-value" id="bioOperations"></span></div>
+                </div>
+                <div class="bio-group">
+                  <div class="bio-row"><span class="bio-label">Motivation</span><span class="bio-value" id="bioMotivation"></span></div>
+                  <div class="bio-row"><span class="bio-label">Trauma</span><span class="bio-value" id="bioTrauma"></span></div>
+                </div>
+                <div class="bio-description">
+                  <div class="bio-label">Background</div>
+                  <div class="bio-value" id="bioBackground"></div>
+                </div>
+              </div>
             </div>
             <div class="sheet-portrait"></div>
           </div>
@@ -338,6 +401,18 @@
       const char = characters[index];
       document.getElementById('sheetTitle').textContent = char.name;
       document.querySelector('.sheet-portrait').style.backgroundImage = char.pic_url ? `url('${char.pic_url}')` : '';
+      document.getElementById('bioIdentity').textContent = char.identity || '';
+      document.getElementById('bioSkin').textContent = char.skin || '';
+      document.getElementById('bioHair').textContent = char.hair || '';
+      document.getElementById('bioEyes').textContent = char.eyes || '';
+      document.getElementById('bioHeight').textContent = char.height || '';
+      document.getElementById('bioWeight').textContent = char.weight || '';
+      document.getElementById('bioOccupation').textContent = char.occupation || '';
+      document.getElementById('bioStatus').textContent = char.status || '';
+      document.getElementById('bioOperations').textContent = char.area_of_operations || '';
+      document.getElementById('bioMotivation').textContent = char.motivation || '';
+      document.getElementById('bioTrauma').textContent = char.trauma || '';
+      document.getElementById('bioBackground').textContent = char.short_bio || '';
       document.getElementById('modalOverlay').classList.add('active');
     }
 
