@@ -444,8 +444,8 @@
               </div>
             </div>
           </div>
+          <div class="sheet-credit" id="sheetCredit"></div>
         </div>
-        <div class="sheet-credit" id="sheetCredit"></div>
       </div>
       <div class="modal-buttons">
         <button class="modal-btn" id="btnPrev">◀ Prev</button>
@@ -600,13 +600,13 @@ function drawRadar(char) {
 
   const stats = [
   { key: 'senses',     label: 'Senses',     angle: -157.5, yOffset: 0  },
-  { key: 'fighting',   label: 'Fighting',   angle: -67.5,  yOffset: 12 },
+  { key: 'fighting',   label: 'Agility',   angle: -67.5,  yOffset: 12 },
   { key: 'speed',      label: 'Speed',      angle: -22.5,  yOffset: 0  },
-  { key: 'strength',   label: 'Strength',   angle: 22.5,   yOffset: 0  },
-  { key: 'durability', label: 'Durability', angle: 67.5,   yOffset: -16 },
+  { key: 'strength',   label: 'Might',   angle: 22.5,   yOffset: 0  },
+  { key: 'durability', label: 'Body', angle: 67.5,   yOffset: -16 },
   { key: 'will',       label: 'Will',       angle: 112.5,  yOffset: -16 },
-  { key: 'intellect',  label: 'Intellect',  angle: 157.5,  yOffset: 0  },
-  { key: 'projection', label: 'Projection', angle: -112.5, yOffset: 12 },
+  { key: 'intellect',  label: 'Mind',  angle: 157.5,  yOffset: 0  },
+  { key: 'projection', label: 'Power', angle: -112.5, yOffset: 12 },
 ];
 
   const toRad = deg => deg * Math.PI / 180;
