@@ -9,7 +9,6 @@
       font-family: 'Red Circle';
       src: url('REDCIRCL.ttf') format('truetype');
     }
-    
     @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600&display=swap');
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -68,16 +67,8 @@
       overflow: hidden;
     }
 
-    .card-name .letter {
-      display: block;
-      text-align: center;
-      width: 100%;
-    }
-
-    .card-name .space {
-      display: block;
-      height: 0.4em;
-    }
+    .card-name .letter { display: block; text-align: center; width: 100%; }
+    .card-name .space { display: block; height: 0.4em; }
 
     .card-image {
       flex: 1;
@@ -96,10 +87,7 @@
       align-items: center;
       justify-content: center;
     }
-
-    .modal-overlay.active {
-      display: flex;
-    }
+    .modal-overlay.active { display: flex; }
 
     /* === MODAL === */
     .modal {
@@ -120,7 +108,6 @@
       flex-direction: column;
       align-items: center;
       padding: 8px 0;
-      gap: 0;
       flex-shrink: 0;
     }
 
@@ -135,7 +122,6 @@
       width: 100%;
       text-align: center;
     }
-
     .modal-close:hover { color: #fff; }
 
     .sidebar-spacer { flex: 1; }
@@ -156,6 +142,7 @@
       gap: 6px;
       width: 100%;
       padding: 0 6px;
+      margin-top: 6px;
     }
 
     .sidebar-admin {
@@ -181,45 +168,45 @@
       width: 100%;
       text-align: center;
     }
-
-    .modal-btn:hover {
-      background: #444;
-      color: #fff;
-    }
+    .modal-btn:hover { background: #4a7aa0; color: #fff; }
 
     .modal-btn.admin {
       color: #aac4e0;
       border-color: #7a9fc0;
-      border-radius: 12px;
       cursor: default;
       font-size: 11px;
     }
 
-    /* Sheet content */
+    #btnPrev, #btnNext { border: none; }
+
+    /* === SHEET === */
+    /* Container query context on the sheet */
     .modal-sheet {
       flex: 1;
       background: #fff;
       overflow: hidden;
       display: flex;
       padding: 0;
+      container-type: inline-size;
+      container-name: sheet;
     }
 
     .sheet {
       width: 100%;
       height: 100%;
       background: #fff;
-      padding: 16px;
+      padding: clamp(8px, 2cqi, 20px);
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: clamp(4px, 1cqi, 12px);
     }
 
     .sheet-title {
-      border: 3px solid #111;
-      border-radius: 12px;
+      border: clamp(2px, 0.4cqi, 4px) solid #111;
+      border-radius: clamp(6px, 1.5cqi, 14px);
       text-align: center;
       font-family: 'Red Circle', sans-serif;
-      font-size: 1.5em;
+      font-size: clamp(0.9rem, 3.5cqi, 2.2rem);
       height: 5.15%;
       display: flex;
       align-items: center;
@@ -231,22 +218,22 @@
 
     .sheet-middle {
       display: flex;
-      gap: 10px;
+      gap: clamp(4px, 1cqi, 12px);
       height: 44%;
       flex-shrink: 0;
     }
 
     .sheet-bio {
       width: 54%;
-      border: 3px solid #111;
-      border-radius: 12px;
-      padding: 8px;
+      border: clamp(2px, 0.4cqi, 4px) solid #111;
+      border-radius: clamp(6px, 1.5cqi, 14px);
+      padding: clamp(4px, 1cqi, 10px);
     }
 
     .sheet-portrait {
       flex: 1;
-      border: 3px solid #111;
-      border-radius: 12px;
+      border: clamp(2px, 0.4cqi, 4px) solid #111;
+      border-radius: clamp(6px, 1.5cqi, 14px);
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
@@ -254,7 +241,7 @@
 
     .sheet-section-title {
       font-family: 'Red Circle', sans-serif;
-      font-size: 1em;
+      font-size: clamp(0.5rem, 1.8cqi, 1.1rem);
       text-transform: uppercase;
       letter-spacing: 0.05em;
       text-align: center;
@@ -262,23 +249,23 @@
 
     .sheet-bottom {
       display: flex;
-      gap: 10px;
+      gap: clamp(4px, 1cqi, 12px);
       height: 46%;
       flex-shrink: 0;
     }
 
     .sheet-powers {
       width: 46%;
-      border: 3px solid #111;
-      border-radius: 12px;
-      padding: 8px;
+      border: clamp(2px, 0.4cqi, 4px) solid #111;
+      border-radius: clamp(6px, 1.5cqi, 14px);
+      padding: clamp(4px, 1cqi, 10px);
     }
 
     .sheet-ability {
       flex: 1;
-      border: 3px solid #111;
-      border-radius: 12px;
-      padding: 8px;
+      border: clamp(2px, 0.4cqi, 4px) solid #111;
+      border-radius: clamp(6px, 1.5cqi, 14px);
+      padding: clamp(4px, 1cqi, 10px);
       display: flex;
       flex-direction: column;
     }
@@ -286,26 +273,23 @@
     .bio-fields {
       display: flex;
       flex-direction: column;
-      gap: 4px;
-      font-size: 0.59em;
-      margin-top: 8px;
+      gap: clamp(2px, 0.4cqi, 5px);
+      font-size: clamp(0.38rem, 1.1cqi, 0.72rem);
+      margin-top: clamp(4px, 0.8cqi, 10px);
     }
 
     .bio-group {
       display: flex;
       flex-direction: column;
-      margin-bottom: 4px;
+      margin-bottom: clamp(2px, 0.5cqi, 6px);
     }
 
-    .bio-row {
-      display: flex;
-      gap: 6px;
-    }
+    .bio-row { display: flex; gap: 6px; }
 
     .bio-label {
       font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
       font-weight: bold;
-      min-width: 70px;
+      min-width: clamp(40px, 8cqi, 80px);
       flex-shrink: 0;
     }
 
@@ -314,7 +298,7 @@
     }
 
     .bio-description {
-      margin-top: 4px;
+      margin-top: clamp(2px, 0.5cqi, 5px);
       display: flex;
       flex-direction: column;
       gap: 2px;
@@ -322,8 +306,8 @@
 
     .powers-text {
       font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
-      font-size: 0.59em;
-      margin-top: 8px;
+      font-size: clamp(0.38rem, 1.1cqi, 0.72rem);
+      margin-top: clamp(4px, 0.8cqi, 10px);
       white-space: pre-wrap;
     }
 
@@ -343,18 +327,18 @@
     }
 
     .ability-fields {
-      font-size: 0.59em;
-      margin-top: 8px;
-      margin-bottom: 4px;
+      font-size: clamp(0.38rem, 1.1cqi, 0.72rem);
+      margin-top: clamp(4px, 0.8cqi, 10px);
+      margin-bottom: clamp(2px, 0.5cqi, 5px);
     }
 
     .radar-legend {
       display: flex;
       justify-content: space-between;
       font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
-      font-size: 0.5em;
-      margin-top: 8px;
-      padding: 0 4px;
+      font-size: clamp(0.28rem, 0.85cqi, 0.55rem);
+      margin-top: clamp(3px, 0.6cqi, 8px);
+      padding: 0 clamp(2px, 0.5cqi, 6px);
     }
 
     .legend-col {
@@ -370,30 +354,19 @@
 
     .sheet-credit {
       font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
-      font-size: 0.59em;
+      font-size: clamp(0.35rem, 1cqi, 0.65rem);
       font-style: italic;
       color: #80C0FF;
       text-align: center;
-      margin-top: -6px;
-    }
-
-    #btnPrev {
-      border: none;
-      margin-top:  16px;
-    }
-
-    #btnNext {
-      border: none;
+      margin-top: -4px;
     }
   </style>
 </head>
 <body>
 
-  <!-- Modal -->
   <div class="modal-overlay" id="modalOverlay">
     <div class="modal" id="modal">
 
-      <!-- Vertical Sidebar -->
       <div class="modal-sidebar">
         <button class="modal-close" id="modalClose">✕</button>
         <div class="sidebar-nav">
@@ -410,7 +383,6 @@
         </div>
       </div>
 
-      <!-- Sheet -->
       <div class="modal-sheet" id="modalSheet">
         <div class="sheet">
           <div class="sheet-title" id="sheetTitle">Ever Star</div>
@@ -464,23 +436,15 @@
               <div class="radar-legend">
                 <div class="legend-col">
                   <div class="legend-header">DISABILITY</div>
-                  <div>0 Terrible</div>
-                  <div>1 Poor</div>
-                  <div>2 Mediocre</div>
+                  <div>0 Terrible</div><div>1 Poor</div><div>2 Mediocre</div>
                 </div>
                 <div class="legend-col">
                   <div class="legend-header">HUMAN</div>
-                  <div>3 Average</div>
-                  <div>4 Fair</div>
-                  <div>5 Good</div>
-                  <div>6 Great</div>
+                  <div>3 Average</div><div>4 Fair</div><div>5 Good</div><div>6 Great</div>
                 </div>
                 <div class="legend-col">
                   <div class="legend-header">SUPERIOR</div>
-                  <div>7 Superb</div>
-                  <div>8 Fantastic</div>
-                  <div>9 Epic</div>
-                  <div>10 Legendary</div>
+                  <div>7 Superb</div><div>8 Fantastic</div><div>9 Epic</div><div>10 Legendary</div>
                 </div>
                 <div class="legend-col">
                   <div class="legend-header">COSMIC</div>
@@ -512,11 +476,6 @@
       const maxW = window.innerWidth - padding * 2;
       const maxH = window.innerHeight - padding * 2;
 
-      // Sheet area width = total modal width - sidebar
-      // Sheet height must equal sheetW * ratio
-      // Total modal height = sheetH
-      // Total modal width = sheetW + sidebarW
-
       let sheetH = maxH;
       let sheetW = sheetH / ratio;
 
@@ -527,6 +486,11 @@
 
       modal.style.width = (sheetW + sidebarW) + 'px';
       modal.style.height = sheetH + 'px';
+
+      // Redraw radar with new dimensions if modal is open
+      if (document.getElementById('modalOverlay').classList.contains('active') && characters[currentIndex]) {
+        drawRadar(characters[currentIndex]);
+      }
     }
 
     window.addEventListener('resize', sizeModal);
@@ -551,15 +515,16 @@
       document.getElementById('bioTrauma').textContent = char.trauma || '';
       document.getElementById('bioBackground').textContent = char.short_bio || '';
       document.getElementById('modalOverlay').classList.add('active');
+
       const powers = char.powers || '';
       const vulner = char.vulnerabilities || '';
       document.getElementById('powerText').textContent = powers + (vulner ? '\n\n' + vulner : '');
-      drawRadar(char);
+
       document.getElementById('abilArchetypes').textContent = char.archetype || '';
 
-      const stats = [char.strength, char.durability, char.speed, char.fighting, char.senses, char.intellect, char.will, char.projection].map(v => parseInt(v) || 0);
-      const statSum = stats.reduce((a, b) => a + b, 0);
-      const statMax = Math.max(...stats);
+      const statVals = [char.strength, char.durability, char.speed, char.fighting, char.senses, char.intellect, char.will, char.projection].map(v => parseInt(v) || 0);
+      const statSum = statVals.reduce((a, b) => a + b, 0);
+      const statMax = Math.max(...statVals);
       let powerLevel;
       if (statSum >= 60) powerLevel = 'Cosmic';
       else if (statMax >= 11 || statSum >= 56) powerLevel = 'Extreme Meta';
@@ -573,7 +538,10 @@
 
       document.getElementById('abilPowerSource').textContent = char.power_origin || '';
       const year = char.created_at ? new Date(char.created_at).getFullYear() : new Date().getFullYear();
-      document.getElementById('sheetCredit').textContent = char.created_by ? `${char.name} © ${year} by ${char.created_by}. All rights reserved.` : '';
+      document.getElementById('sheetCredit').textContent = char.created_by ? `${char.name} \u00A9 ${year} by ${char.created_by}. All rights reserved.` : '';
+
+      // Draw radar after modal is visible so container size is known
+      requestAnimationFrame(() => drawRadar(char));
     }
 
     document.getElementById('modalClose').addEventListener('click', () => {
@@ -631,9 +599,7 @@
 
       const imgCol = document.createElement('div');
       imgCol.className = 'card-image';
-      if (char.pic_url) {
-        imgCol.style.backgroundImage = `url('${char.pic_url}')`;
-      }
+      if (char.pic_url) imgCol.style.backgroundImage = `url('${char.pic_url}')`;
 
       card.appendChild(nameCol);
       card.appendChild(imgCol);
@@ -642,9 +608,29 @@
 
     function drawRadar(char) {
       const svg = document.getElementById('radarChart');
+      const container = document.getElementById('radarContainer');
       svg.innerHTML = '';
 
-      const cx = 150, cy = 105, maxR = 70;
+      // Derive scale from actual container width
+      const containerW = container.clientWidth || 200;
+      // viewBox is 300x300; scale factor maps container px to viewBox units
+      const scale = 300 / containerW;
+
+      // Radar circle sized to fill ~47% of viewBox width, centered high
+      const cx = 150;
+      const maxR = 70;
+      // cy offset so chart sits near top of viewBox with room for top labels
+      const cy = 105;
+
+      // Label offset proportional to maxR
+      const labelOffset = maxR + 40;
+      // Font sizes in SVG units (viewBox space) — stay at 10 regardless of container
+      // since SVG scales with viewBox
+      const labelFontSize = 10;
+      const descFontSize = 10;
+      // yOffsets in SVG viewBox units
+      const yOffsetUnit = maxR * 0.17;
+
       const rings = 11;
       const ringColors = [
         '#8B0000','#B43C00','#DC3C00','#EB5F00','#F27D00',
@@ -652,94 +638,99 @@
       ];
 
       const stats = [
-        { key: 'senses',     label: 'Senses',  angle: -157.5, yOffset: 0   },
-        { key: 'fighting',   label: 'Agility', angle: -67.5,  yOffset: 12  },
-        { key: 'speed',      label: 'Speed',   angle: -22.5,  yOffset: 0   },
-        { key: 'strength',   label: 'Might',   angle: 22.5,   yOffset: 0   },
-        { key: 'durability', label: 'Body',    angle: 67.5,   yOffset: -16 },
-        { key: 'will',       label: 'Will',    angle: 112.5,  yOffset: -16 },
-        { key: 'intellect',  label: 'Mind',    angle: 157.5,  yOffset: 0   },
-        { key: 'projection', label: 'Project', angle: -112.5, yOffset: 12  },
+        { key: 'senses',     label: 'Senses',  angle: -157.5, yOffset: 0           },
+        { key: 'fighting',   label: 'Agility', angle: -67.5,  yOffset: yOffsetUnit  },
+        { key: 'speed',      label: 'Speed',   angle: -22.5,  yOffset: 0            },
+        { key: 'strength',   label: 'Might',   angle: 22.5,   yOffset: 0            },
+        { key: 'durability', label: 'Body',    angle: 67.5,   yOffset: -yOffsetUnit },
+        { key: 'will',       label: 'Will',    angle: 112.5,  yOffset: -yOffsetUnit },
+        { key: 'intellect',  label: 'Mind',    angle: 157.5,  yOffset: 0            },
+        { key: 'projection', label: 'Project', angle: -112.5, yOffset: yOffsetUnit  },
       ];
 
       const toRad = deg => deg * Math.PI / 180;
-      const ptOnAxis = (angle, r) => ({
+      const pt = (angle, r) => ({
         x: cx + r * Math.cos(toRad(angle)),
         y: cy + r * Math.sin(toRad(angle))
       });
 
-      const bgCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-      bgCircle.setAttribute('cx', cx); bgCircle.setAttribute('cy', cy);
-      bgCircle.setAttribute('r', maxR); bgCircle.setAttribute('fill', '#406080');
-      svg.appendChild(bgCircle);
+      const ns = 'http://www.w3.org/2000/svg';
 
+      // Background circle
+      const bg = document.createElementNS(ns, 'circle');
+      bg.setAttribute('cx', cx); bg.setAttribute('cy', cy);
+      bg.setAttribute('r', maxR); bg.setAttribute('fill', '#406080');
+      svg.appendChild(bg);
+
+      // Colored slices
       const sliceAngle = 360 / 8;
       stats.forEach(stat => {
         const val = Math.min(Math.max(parseInt(char[stat.key]) || 0, 0), 11);
         if (val === 0) return;
-        const startAngle = stat.angle - sliceAngle / 2;
-        const endAngle = stat.angle + sliceAngle / 2;
+        const sa = stat.angle - sliceAngle / 2;
+        const ea = stat.angle + sliceAngle / 2;
         for (let ring = 1; ring <= val; ring++) {
-          const outerR = (ring / rings) * maxR;
-          const innerR = ((ring - 1) / rings) * maxR;
-          const x1 = cx + outerR * Math.cos(toRad(startAngle));
-          const y1 = cy + outerR * Math.sin(toRad(startAngle));
-          const x2 = cx + outerR * Math.cos(toRad(endAngle));
-          const y2 = cy + outerR * Math.sin(toRad(endAngle));
-          const x3 = cx + innerR * Math.cos(toRad(endAngle));
-          const y3 = cy + innerR * Math.sin(toRad(endAngle));
-          const x4 = cx + innerR * Math.cos(toRad(startAngle));
-          const y4 = cy + innerR * Math.sin(toRad(startAngle));
-          const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-          path.setAttribute('d', `M ${x4} ${y4} L ${x1} ${y1} A ${outerR} ${outerR} 0 0 1 ${x2} ${y2} L ${x3} ${y3} A ${innerR} ${innerR} 0 0 0 ${x4} ${y4} Z`);
+          const oR = (ring / rings) * maxR;
+          const iR = ((ring - 1) / rings) * maxR;
+          const x1 = cx + oR * Math.cos(toRad(sa)), y1 = cy + oR * Math.sin(toRad(sa));
+          const x2 = cx + oR * Math.cos(toRad(ea)), y2 = cy + oR * Math.sin(toRad(ea));
+          const x3 = cx + iR * Math.cos(toRad(ea)), y3 = cy + iR * Math.sin(toRad(ea));
+          const x4 = cx + iR * Math.cos(toRad(sa)), y4 = cy + iR * Math.sin(toRad(sa));
+          const path = document.createElementNS(ns, 'path');
+          path.setAttribute('d', `M ${x4} ${y4} L ${x1} ${y1} A ${oR} ${oR} 0 0 1 ${x2} ${y2} L ${x3} ${y3} A ${iR} ${iR} 0 0 0 ${x4} ${y4} Z`);
           path.setAttribute('fill', ringColors[ring - 1]);
           svg.appendChild(path);
         }
       });
 
+      // Ring outlines
       for (let ring = 1; ring <= rings; ring++) {
         const r = (ring / rings) * maxR;
-        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-        circle.setAttribute('cx', cx); circle.setAttribute('cy', cy);
-        circle.setAttribute('r', r); circle.setAttribute('fill', 'none');
-        circle.setAttribute('stroke', '#111'); circle.setAttribute('stroke-width', '0.8');
-        if (ring === 2 || ring === 6) circle.setAttribute('stroke-dasharray', '3,2');
-        svg.appendChild(circle);
+        const c = document.createElementNS(ns, 'circle');
+        c.setAttribute('cx', cx); c.setAttribute('cy', cy);
+        c.setAttribute('r', r); c.setAttribute('fill', 'none');
+        c.setAttribute('stroke', '#111'); c.setAttribute('stroke-width', '0.8');
+        if (ring === 2 || ring === 6) c.setAttribute('stroke-dasharray', '3,2');
+        svg.appendChild(c);
       }
 
-      const axisAngles = [-135, -90, -45, 0, 45, 90, 135, 180];
-      axisAngles.forEach(angle => {
-        const pt = ptOnAxis(angle, maxR);
-        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      // Axis lines
+      [-135, -90, -45, 0, 45, 90, 135, 180].forEach(angle => {
+        const p = pt(angle, maxR);
+        const line = document.createElementNS(ns, 'line');
         line.setAttribute('x1', cx); line.setAttribute('y1', cy);
-        line.setAttribute('x2', pt.x); line.setAttribute('y2', pt.y);
+        line.setAttribute('x2', p.x); line.setAttribute('y2', p.y);
         line.setAttribute('stroke', '#111'); line.setAttribute('stroke-width', '1');
         svg.appendChild(line);
       });
 
-      const border = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      // Outer border
+      const border = document.createElementNS(ns, 'circle');
       border.setAttribute('cx', cx); border.setAttribute('cy', cy);
       border.setAttribute('r', maxR); border.setAttribute('fill', 'none');
       border.setAttribute('stroke', '#111'); border.setAttribute('stroke-width', '1.5');
       svg.appendChild(border);
 
+      // Labels
       const descriptors = ['Terrible','Poor','Mediocre','Average','Fair','Good','Great','Superb','Fantastic','Epic','Legendary','Cosmic'];
       stats.forEach(stat => {
         const val = Math.min(Math.max(parseInt(char[stat.key]) || 0, 0), 11);
-        const pt = ptOnAxis(stat.angle, maxR + 40);
+        const p = pt(stat.angle, labelOffset);
 
-        const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-        label.setAttribute('x', pt.x); label.setAttribute('y', pt.y + stat.yOffset);
+        const label = document.createElementNS(ns, 'text');
+        label.setAttribute('x', p.x); label.setAttribute('y', p.y + stat.yOffset);
         label.setAttribute('text-anchor', 'middle'); label.setAttribute('dominant-baseline', 'middle');
-        label.setAttribute('font-family', 'Red Circle, sans-serif'); label.setAttribute('font-size', '10');
+        label.setAttribute('font-family', 'Red Circle, sans-serif');
+        label.setAttribute('font-size', labelFontSize);
         label.setAttribute('fill', '#111');
         label.textContent = `${stat.label.toUpperCase()} ${val}`;
         svg.appendChild(label);
 
-        const desc = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-        desc.setAttribute('x', pt.x); desc.setAttribute('y', pt.y + 11 + stat.yOffset);
+        const desc = document.createElementNS(ns, 'text');
+        desc.setAttribute('x', p.x); desc.setAttribute('y', p.y + 11 + stat.yOffset);
         desc.setAttribute('text-anchor', 'middle'); desc.setAttribute('dominant-baseline', 'middle');
-        desc.setAttribute('font-family', 'Lucida Sans, sans-serif'); desc.setAttribute('font-size', '10');
+        desc.setAttribute('font-family', 'Lucida Sans, sans-serif');
+        desc.setAttribute('font-size', descFontSize);
         desc.setAttribute('fill', '#111');
         desc.textContent = descriptors[val] || '';
         svg.appendChild(desc);
