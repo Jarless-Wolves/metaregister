@@ -529,15 +529,15 @@ function drawRadar(char) {
   ];
 
   const stats = [
-    { key: 'senses',     label: 'Senses',     angle: -157.5 },
-    { key: 'fighting',   label: 'Fighting',   angle: -67.5  },
-    { key: 'speed',      label: 'Speed',      angle: -22.5  },
-    { key: 'strength',   label: 'Strength',   angle: 22.5   },
-    { key: 'durability', label: 'Durability', angle: 67.5   },
-    { key: 'will',       label: 'Will',       angle: 112.5  },
-    { key: 'intellect',  label: 'Intellect',  angle: 157.5  },
-    { key: 'projection', label: 'Projection', angle: -112.5 },
-  ];
+  { key: 'senses',     label: 'Senses',     angle: -157.5, yOffset: 0  },
+  { key: 'fighting',   label: 'Fighting',   angle: -67.5,  yOffset: 12 },
+  { key: 'speed',      label: 'Speed',      angle: -22.5,  yOffset: 0  },
+  { key: 'strength',   label: 'Strength',   angle: 22.5,   yOffset: 0  },
+  { key: 'durability', label: 'Durability', angle: 67.5,   yOffset: -12 },
+  { key: 'will',       label: 'Will',       angle: 112.5,  yOffset: -12 },
+  { key: 'intellect',  label: 'Intellect',  angle: 157.5,  yOffset: 0  },
+  { key: 'projection', label: 'Projection', angle: -112.5, yOffset: 12 },
+];
 
   const toRad = deg => deg * Math.PI / 180;
   const ptOnAxis = (angle, r) => ({
@@ -632,7 +632,7 @@ stats.forEach(stat => {
   
   const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
   label.setAttribute('x', pt.x);
-  label.setAttribute('y', pt.y);
+  label.setAttribute('y', pt.y + stat.yOffset);
   label.setAttribute('text-anchor', 'middle');
   label.setAttribute('dominant-baseline', 'middle');
   label.setAttribute('font-family', 'Red Circle, sans-serif');
@@ -643,7 +643,7 @@ stats.forEach(stat => {
 
   const desc = document.createElementNS('http://www.w3.org/2000/svg', 'text');
   desc.setAttribute('x', pt.x);
-  desc.setAttribute('y', pt.y + 11);
+  desc.setAttribute('y', pt.y + 11 + stat.yOffset);
   desc.setAttribute('text-anchor', 'middle');
   desc.setAttribute('dominant-baseline', 'middle');
   desc.setAttribute('font-family', 'Lucida Sans, sans-serif');
