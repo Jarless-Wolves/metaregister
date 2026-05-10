@@ -304,18 +304,6 @@
   margin-top: 8px;
   white-space: pre-wrap;
 }
-
-.sheet-ability {
-  display: flex;
-  flex-direction: column;
-}
-
-#radarContainer {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
   </style>
   
 </head>
@@ -369,9 +357,6 @@
             </div>
             <div class="sheet-ability">
               <div class="sheet-section-title">Ability Profile</div>
-              <div id="radarContainer">
-                <svg id="radarChart" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg"></svg>
-              </div>
             </div>
           </div>
         </div>
@@ -442,7 +427,6 @@
       const powers = char.powers || '';
       const vulner = char.vulnerabilities || '';
       document.getElementById('powerText').textContent = powers + (vulner ? '\n\n' + vulner : '');
-      drawRadar(char);
     }
 
     // Close modal
@@ -512,113 +496,6 @@
       document.body.appendChild(card);
     }
 
-function drawRadar(char) {
-  const svg = document.getElementById('radarChart');
-  svg.innerHTML = '';
-
-  const cx = 150, cy = 150, maxR = 130;
-  const rings = 11;
-  const ringColors = [
-    '#8B0000','#B43C00','#DC3C00','#EB5F00','#F27D00',
-    '#F69B00','#FAB900','#FCD200','#FEE400','#FFF250','#FFFFD2'
-  ];
-
-  const stats = [
-    { key: 'projection', label: 'Projection', angle: -135 },
-    { key: 'fighting',   label: 'Fighting',   angle: -45  },
-    { key: 'speed',      label: 'Speed',      angle: 0    },
-    { key: 'strength',   label: 'Strength',   angle: 45   },
-    { key: 'durability', label: 'Durability', angle: 90   },
-    { key: 'will',       label: 'Will',       angle: 135  },
-    { key: 'intellect',  label: 'Intellect',  angle: 180  },
-    { key: 'senses',     label: 'Senses',     angle: -90  },
-  ];
-
-  const toRad = deg => deg * Math.PI / 180;
-  const ptOnAxis = (angle, r) => ({
-    x: cx + r * Math.cos(toRad(angle)),
-    y: cy + r * Math.sin(toRad(angle))
-  });
-
-  // Background circle
-  const bgCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-  bgCircle.setAttribute('cx', cx);
-  bgCircle.setAttribute('cy', cy);
-  bgCircle.setAttribute('r', maxR);
-  bgCircle.setAttribute('fill', '#406080');
-  svg.appendChild(bgCircle);
-
-  // Draw colored slices for each stat
-  const sliceAngle = 360 / 8;
-  stats.forEach((stat, i) => {
-    const val = Math.min(Math.max(parseInt(char[stat.key]) || 0, 0), 11);
-    if (val === 0) return;
-
-    const startAngle = stat.angle - sliceAngle / 2;
-    const endAngle = stat.angle + sliceAngle / 2;
-
-    // Draw each ring segment for this slice up to val
-    for (let ring = 1; ring <= val; ring++) {
-      const outerR = (ring / rings) * maxR;
-      const innerR = ((ring - 1) / rings) * maxR;
-
-      const x1 = cx + outerR * Math.cos(toRad(startAngle));
-      const y1 = cy + outerR * Math.sin(toRad(startAngle));
-      const x2 = cx + outerR * Math.cos(toRad(endAngle));
-      const y2 = cy + outerR * Math.sin(toRad(endAngle));
-      const x3 = cx + innerR * Math.cos(toRad(endAngle));
-      const y3 = cy + innerR * Math.sin(toRad(endAngle));
-      const x4 = cx + innerR * Math.cos(toRad(startAngle));
-      const y4 = cy + innerR * Math.sin(toRad(startAngle));
-
-      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      const d = `M ${x4} ${y4} L ${x1} ${y1} A ${outerR} ${outerR} 0 0 1 ${x2} ${y2} L ${x3} ${y3} A ${innerR} ${innerR} 0 0 0 ${x4} ${y4} Z`;
-      path.setAttribute('d', d);
-      path.setAttribute('fill', ringColors[ring - 1]);
-      svg.appendChild(path);
-    }
-  });
-
-  // Ring outlines
-  for (let ring = 1; ring <= rings; ring++) {
-    const r = (ring / rings) * maxR;
-    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    circle.setAttribute('cx', cx);
-    circle.setAttribute('cy', cy);
-    circle.setAttribute('r', r);
-    circle.setAttribute('fill', 'none');
-    circle.setAttribute('stroke', '#111');
-    circle.setAttribute('stroke-width', '0.8');
-    if (ring === 2 || ring === 6) {
-      circle.setAttribute('stroke-dasharray', '3,2');
-    }
-    svg.appendChild(circle);
-  }
-
-  // Axis lines
-  stats.forEach(stat => {
-    const pt = ptOnAxis(stat.angle, maxR);
-    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-    line.setAttribute('x1', cx);
-    line.setAttribute('y1', cy);
-    line.setAttribute('x2', pt.x);
-    line.setAttribute('y2', pt.y);
-    line.setAttribute('stroke', '#111');
-    line.setAttribute('stroke-width', '1');
-    svg.appendChild(line);
-  });
-
-  // Outer border
-  const border = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-  border.setAttribute('cx', cx);
-  border.setAttribute('cy', cy);
-  border.setAttribute('r', maxR);
-  border.setAttribute('fill', 'none');
-  border.setAttribute('stroke', '#111');
-  border.setAttribute('stroke-width', '1.5');
-  svg.appendChild(border);
-}
-    
     async function loadCharacters() {
       try {
         const response = await fetch(
