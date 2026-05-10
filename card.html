@@ -327,6 +327,26 @@
   margin-top: 8px;
   margin-bottom: 4px;
 }
+
+.radar-legend {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
+  font-size: 0.5em;
+  margin-top: 4px;
+  padding: 0 4px;
+}
+
+.legend-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.legend-header {
+  font-weight: bold;
+  margin-bottom: 2px;
+}
   </style>
   
 </head>
@@ -379,7 +399,7 @@
               <div class="powers-text" id="powerText"></div>
             </div>
             <div class="sheet-ability">
-              <div class="sheet-section-title">Ability Profile cy 110</div>
+              <div class="sheet-section-title">Ability Profile legend</div>
               <div class="ability-fields">
                 <div class="bio-row"><span class="bio-label">Archetypes</span><span class="bio-value" id="abilArchetypes"></span></div>
                 <div class="bio-row"><span class="bio-label">Power Level</span><span class="bio-value" id="abilPowerLevel"></span></div>
@@ -387,6 +407,32 @@
               </div>
               <div id="radarContainer">
                 <svg id="radarChart" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg"></svg>
+              </div>
+              <div class="radar-legend">
+              <div class="legend-col">
+                <div class="legend-header">Disability</div>
+                  <div>0 Terrible</div>
+                  <div>1 Poor</div>
+                  <div>2 Mediocre</div>
+                </div>
+                <div class="legend-col">
+                  <div class="legend-header">Human</div>
+                  <div>3 Average</div>
+                  <div>4 Fair</div>
+                  <div>5 Good</div>
+                  <div>6 Great</div>
+                </div>
+                <div class="legend-col">
+                  <div class="legend-header">Superior</div>
+                  <div>7 Superb</div>
+                  <div>8 Fantastic</div>
+                  <div>9 Epic</div>
+                  <div>10 Legendary</div>
+                </div>
+                <div class="legend-col">
+                  <div class="legend-header">Cosmic</div>
+                  <div>11 Cosmic</div>
+                </div>
               </div>
             </div>
           </div>
