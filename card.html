@@ -347,6 +347,14 @@
   font-weight: bold;
   margin-bottom: 2px;
 }
+
+.sheet-credit {
+  font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
+  font-size: 0.59em;
+  font-style: italic;
+  color: #80C0FF;
+  text-align: center;
+}
   </style>
   
 </head>
@@ -437,6 +445,7 @@
             </div>
           </div>
         </div>
+        <div class="sheet-credit" id="sheetCredit"></div>
       </div>
       <div class="modal-buttons">
         <button class="modal-btn" id="btnPrev">◀ Prev</button>
@@ -508,6 +517,7 @@
       document.getElementById('abilArchetypes').textContent = char.archetype || '';
       document.getElementById('abilPowerLevel').textContent = char.power_level || '';
       document.getElementById('abilPowerSource').textContent = char.power_origin || '';
+      document.getElementById('sheetCredit').textContent = char.created_by ? `${char.name} created by ${char.created_by}` : '';
     }
 
     // Close modal
