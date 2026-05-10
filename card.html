@@ -39,12 +39,10 @@
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       box-shadow: 6px 8px 8px rgba(15, 22, 30, 1.0);
     }
-
     .card:hover {
       transform: translateY(-4px);
       box-shadow: 8px 10px 12px rgba(15, 22, 30, 1.0);
     }
-
     .card-name {
       font-family: 'Bebas Neue', sans-serif;
       font-weight: bold;
@@ -66,10 +64,8 @@
       text-align: center;
       overflow: hidden;
     }
-
     .card-name .letter { display: block; text-align: center; width: 100%; }
     .card-name .space { display: block; height: 0.4em; }
-
     .card-image {
       flex: 1;
       background-size: cover;
@@ -110,7 +106,6 @@
       padding: 8px 0;
       flex-shrink: 0;
     }
-
     .modal-close {
       background: none;
       border: none;
@@ -123,38 +118,10 @@
       text-align: center;
     }
     .modal-close:hover { color: #fff; }
-
     .sidebar-spacer { flex: 1; }
-
-    .sidebar-tabs {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      width: 100%;
-      padding: 0 6px;
-    }
-
-    .sidebar-nav {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      width: 100%;
-      padding: 0 6px;
-      margin-top: 6px;
-    }
-
-    .sidebar-admin {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      width: 100%;
-      padding: 0 6px;
-      padding-bottom: 8px;
-    }
-
+    .sidebar-tabs { display: flex; flex-direction: column; align-items: center; gap: 4px; width: 100%; padding: 0 6px; }
+    .sidebar-nav { display: flex; flex-direction: column; align-items: center; gap: 6px; width: 100%; padding: 0 6px; margin-top: 6px; }
+    .sidebar-admin { display: flex; flex-direction: column; align-items: center; gap: 6px; width: 100%; padding: 0 6px; padding-bottom: 8px; }
     .modal-btn {
       background: none;
       border: 1px solid #aac4e0;
@@ -169,44 +136,35 @@
       text-align: center;
     }
     .modal-btn:hover { background: #4a7aa0; color: #fff; }
-
-    .modal-btn.admin {
-      color: #aac4e0;
-      border-color: #7a9fc0;
-      cursor: default;
-      font-size: 11px;
-    }
-
+    .modal-btn.admin { color: #aac4e0; border-color: #7a9fc0; cursor: default; font-size: 11px; }
     #btnPrev, #btnNext { border: none; }
 
     /* === SHEET === */
-    /* Container query context on the sheet */
+    /* All sizing driven by --sw (sheet width in px) set by JavaScript */
     .modal-sheet {
       flex: 1;
       background: #fff;
       overflow: hidden;
       display: flex;
       padding: 0;
-      container-type: inline-size;
-      container-name: sheet;
     }
 
     .sheet {
       width: 100%;
       height: 100%;
       background: #fff;
-      padding: clamp(8px, 2cqi, 20px);
+      padding: calc(var(--sw) * 0.02);
       display: flex;
       flex-direction: column;
-      gap: clamp(4px, 1cqi, 12px);
+      gap: calc(var(--sw) * 0.013);
     }
 
     .sheet-title {
-      border: clamp(2px, 0.4cqi, 4px) solid #111;
-      border-radius: clamp(6px, 1.5cqi, 14px);
+      border: calc(var(--sw) * 0.004) solid #111;
+      border-radius: calc(var(--sw) * 0.018);
       text-align: center;
       font-family: 'Red Circle', sans-serif;
-      font-size: clamp(0.9rem, 3.5cqi, 2.2rem);
+      font-size: calc(var(--sw) * 0.042);
       height: 5.15%;
       display: flex;
       align-items: center;
@@ -218,22 +176,22 @@
 
     .sheet-middle {
       display: flex;
-      gap: clamp(4px, 1cqi, 12px);
+      gap: calc(var(--sw) * 0.013);
       height: 44%;
       flex-shrink: 0;
     }
 
     .sheet-bio {
       width: 54%;
-      border: clamp(2px, 0.4cqi, 4px) solid #111;
-      border-radius: clamp(6px, 1.5cqi, 14px);
-      padding: clamp(4px, 1cqi, 10px);
+      border: calc(var(--sw) * 0.004) solid #111;
+      border-radius: calc(var(--sw) * 0.018);
+      padding: calc(var(--sw) * 0.012);
     }
 
     .sheet-portrait {
       flex: 1;
-      border: clamp(2px, 0.4cqi, 4px) solid #111;
-      border-radius: clamp(6px, 1.5cqi, 14px);
+      border: calc(var(--sw) * 0.004) solid #111;
+      border-radius: calc(var(--sw) * 0.018);
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
@@ -241,7 +199,7 @@
 
     .sheet-section-title {
       font-family: 'Red Circle', sans-serif;
-      font-size: clamp(0.5rem, 1.8cqi, 1.1rem);
+      font-size: calc(var(--sw) * 0.022);
       text-transform: uppercase;
       letter-spacing: 0.05em;
       text-align: center;
@@ -249,23 +207,23 @@
 
     .sheet-bottom {
       display: flex;
-      gap: clamp(4px, 1cqi, 12px);
+      gap: calc(var(--sw) * 0.013);
       height: 46%;
       flex-shrink: 0;
     }
 
     .sheet-powers {
       width: 46%;
-      border: clamp(2px, 0.4cqi, 4px) solid #111;
-      border-radius: clamp(6px, 1.5cqi, 14px);
-      padding: clamp(4px, 1cqi, 10px);
+      border: calc(var(--sw) * 0.004) solid #111;
+      border-radius: calc(var(--sw) * 0.018);
+      padding: calc(var(--sw) * 0.012);
     }
 
     .sheet-ability {
       flex: 1;
-      border: clamp(2px, 0.4cqi, 4px) solid #111;
-      border-radius: clamp(6px, 1.5cqi, 14px);
-      padding: clamp(4px, 1cqi, 10px);
+      border: calc(var(--sw) * 0.004) solid #111;
+      border-radius: calc(var(--sw) * 0.018);
+      padding: calc(var(--sw) * 0.012);
       display: flex;
       flex-direction: column;
     }
@@ -273,15 +231,15 @@
     .bio-fields {
       display: flex;
       flex-direction: column;
-      gap: clamp(2px, 0.4cqi, 5px);
-      font-size: clamp(0.38rem, 1.1cqi, 0.72rem);
-      margin-top: clamp(4px, 0.8cqi, 10px);
+      gap: calc(var(--sw) * 0.004);
+      font-size: calc(var(--sw) * 0.014);
+      margin-top: calc(var(--sw) * 0.01);
     }
 
     .bio-group {
       display: flex;
       flex-direction: column;
-      margin-bottom: clamp(2px, 0.5cqi, 6px);
+      margin-bottom: calc(var(--sw) * 0.006);
     }
 
     .bio-row { display: flex; gap: 6px; }
@@ -289,7 +247,7 @@
     .bio-label {
       font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
       font-weight: bold;
-      min-width: clamp(40px, 8cqi, 80px);
+      min-width: calc(var(--sw) * 0.1);
       flex-shrink: 0;
     }
 
@@ -298,7 +256,7 @@
     }
 
     .bio-description {
-      margin-top: clamp(2px, 0.5cqi, 5px);
+      margin-top: calc(var(--sw) * 0.005);
       display: flex;
       flex-direction: column;
       gap: 2px;
@@ -306,8 +264,8 @@
 
     .powers-text {
       font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
-      font-size: clamp(0.38rem, 1.1cqi, 0.72rem);
-      margin-top: clamp(4px, 0.8cqi, 10px);
+      font-size: calc(var(--sw) * 0.014);
+      margin-top: calc(var(--sw) * 0.01);
       white-space: pre-wrap;
     }
 
@@ -327,34 +285,26 @@
     }
 
     .ability-fields {
-      font-size: clamp(0.38rem, 1.1cqi, 0.72rem);
-      margin-top: clamp(4px, 0.8cqi, 10px);
-      margin-bottom: clamp(2px, 0.5cqi, 5px);
+      font-size: calc(var(--sw) * 0.014);
+      margin-top: calc(var(--sw) * 0.01);
+      margin-bottom: calc(var(--sw) * 0.005);
     }
 
     .radar-legend {
       display: flex;
       justify-content: space-between;
       font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
-      font-size: clamp(0.28rem, 0.85cqi, 0.55rem);
-      margin-top: clamp(3px, 0.6cqi, 8px);
-      padding: 0 clamp(2px, 0.5cqi, 6px);
+      font-size: calc(var(--sw) * 0.0105);
+      margin-top: calc(var(--sw) * 0.008);
+      padding: 0 calc(var(--sw) * 0.005);
     }
 
-    .legend-col {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .legend-header {
-      font-weight: bold;
-      margin-bottom: 2px;
-    }
+    .legend-col { display: flex; flex-direction: column; align-items: center; }
+    .legend-header { font-weight: bold; margin-bottom: 2px; }
 
     .sheet-credit {
       font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
-      font-size: clamp(0.35rem, 1cqi, 0.65rem);
+      font-size: calc(var(--sw) * 0.013);
       font-style: italic;
       color: #80C0FF;
       text-align: center;
@@ -384,7 +334,7 @@
       </div>
 
       <div class="modal-sheet" id="modalSheet">
-        <div class="sheet">
+        <div class="sheet" id="sheet">
           <div class="sheet-title" id="sheetTitle">Ever Star</div>
           <div class="sheet-middle">
             <div class="sheet-bio">
@@ -466,30 +416,37 @@
 
     let characters = [];
     let currentIndex = 0;
+    const SIDEBAR_W = 52;
+    const PADDING = 8;
+    const RATIO = 11 / 8.5;
+    const MIN_SHEET_W = 380;
 
     function sizeModal() {
       const modal = document.getElementById('modal');
-      const sidebarW = 52;
-      const padding = 8;
-      const ratio = 11 / 8.5;
-
-      const maxW = window.innerWidth - padding * 2;
-      const maxH = window.innerHeight - padding * 2;
+      const maxW = window.innerWidth - PADDING * 2;
+      const maxH = window.innerHeight - PADDING * 2;
 
       let sheetH = maxH;
-      let sheetW = sheetH / ratio;
+      let sheetW = sheetH / RATIO;
 
-      if (sheetW + sidebarW > maxW) {
-        sheetW = maxW - sidebarW;
-        sheetH = sheetW * ratio;
+      if (sheetW + SIDEBAR_W > maxW) {
+        sheetW = maxW - SIDEBAR_W;
+        sheetH = sheetW * RATIO;
       }
 
-      modal.style.width = (sheetW + sidebarW) + 'px';
+      // Apply minimum floor
+      sheetW = Math.max(sheetW, MIN_SHEET_W);
+      sheetH = Math.max(sheetH, MIN_SHEET_W * RATIO);
+
+      modal.style.width = (sheetW + SIDEBAR_W) + 'px';
       modal.style.height = sheetH + 'px';
 
-      // Redraw radar with new dimensions if modal is open
+      // Set --sw on the sheet element so all calc() expressions scale with it
+      document.getElementById('sheet').style.setProperty('--sw', sheetW + 'px');
+
+      // Redraw radar if modal is open
       if (document.getElementById('modalOverlay').classList.contains('active') && characters[currentIndex]) {
-        drawRadar(characters[currentIndex]);
+        requestAnimationFrame(() => drawRadar(characters[currentIndex]));
       }
     }
 
@@ -515,7 +472,6 @@
       document.getElementById('bioTrauma').textContent = char.trauma || '';
       document.getElementById('bioBackground').textContent = char.short_bio || '';
       document.getElementById('modalOverlay').classList.add('active');
-      sizeModal();
 
       const powers = char.powers || '';
       const vulner = char.vulnerabilities || '';
@@ -541,7 +497,7 @@
       const year = char.created_at ? new Date(char.created_at).getFullYear() : new Date().getFullYear();
       document.getElementById('sheetCredit').textContent = char.created_by ? `${char.name} \u00A9 ${year} by ${char.created_by}. All rights reserved.` : '';
 
-      // Draw radar after modal is visible so container size is known
+      sizeModal();
       requestAnimationFrame(() => drawRadar(char));
     }
 
@@ -609,44 +565,25 @@
 
     function drawRadar(char) {
       const svg = document.getElementById('radarChart');
-      const container = document.getElementById('radarContainer');
       svg.innerHTML = '';
 
-      // Derive scale from actual container width
-      const containerW = container.clientWidth || 200;
-      // viewBox is 300x300; scale factor maps container px to viewBox units
-      const scale = 300 / containerW;
-
-      // Radar circle sized to fill ~47% of viewBox width, centered high
-      const cx = 150;
-      const maxR = 70;
-      // cy offset so chart sits near top of viewBox with room for top labels
-      const cy = 105;
-
-      // Label offset proportional to maxR
-      const labelOffset = maxR + 40;
-      // Font sizes in SVG units (viewBox space) — stay at 10 regardless of container
-      // since SVG scales with viewBox
-      const labelFontSize = 10;
-      const descFontSize = 10;
-      // yOffsets in SVG viewBox units
-      const yOffsetUnit = maxR * 0.17;
-
+      const cx = 150, cy = 105, maxR = 70;
       const rings = 11;
       const ringColors = [
         '#8B0000','#B43C00','#DC3C00','#EB5F00','#F27D00',
         '#F69B00','#FAB900','#FCD200','#FEE400','#FFF250','#FFFFD2'
       ];
 
+      const yOff = maxR * 0.17;
       const stats = [
-        { key: 'senses',     label: 'Senses',  angle: -157.5, yOffset: 0           },
-        { key: 'fighting',   label: 'Agility', angle: -67.5,  yOffset: yOffsetUnit  },
-        { key: 'speed',      label: 'Speed',   angle: -22.5,  yOffset: 0            },
-        { key: 'strength',   label: 'Might',   angle: 22.5,   yOffset: 0            },
-        { key: 'durability', label: 'Body',    angle: 67.5,   yOffset: -yOffsetUnit },
-        { key: 'will',       label: 'Will',    angle: 112.5,  yOffset: -yOffsetUnit },
-        { key: 'intellect',  label: 'Mind',    angle: 157.5,  yOffset: 0            },
-        { key: 'projection', label: 'Project', angle: -112.5, yOffset: yOffsetUnit  },
+        { key: 'senses',     label: 'Senses',  angle: -157.5, yOffset: 0     },
+        { key: 'fighting',   label: 'Agility', angle: -67.5,  yOffset: yOff  },
+        { key: 'speed',      label: 'Speed',   angle: -22.5,  yOffset: 0     },
+        { key: 'strength',   label: 'Might',   angle: 22.5,   yOffset: 0     },
+        { key: 'durability', label: 'Body',    angle: 67.5,   yOffset: -yOff },
+        { key: 'will',       label: 'Will',    angle: 112.5,  yOffset: -yOff },
+        { key: 'intellect',  label: 'Mind',    angle: 157.5,  yOffset: 0     },
+        { key: 'projection', label: 'Project', angle: -112.5, yOffset: yOff  },
       ];
 
       const toRad = deg => deg * Math.PI / 180;
@@ -654,16 +591,13 @@
         x: cx + r * Math.cos(toRad(angle)),
         y: cy + r * Math.sin(toRad(angle))
       });
-
       const ns = 'http://www.w3.org/2000/svg';
 
-      // Background circle
       const bg = document.createElementNS(ns, 'circle');
       bg.setAttribute('cx', cx); bg.setAttribute('cy', cy);
       bg.setAttribute('r', maxR); bg.setAttribute('fill', '#406080');
       svg.appendChild(bg);
 
-      // Colored slices
       const sliceAngle = 360 / 8;
       stats.forEach(stat => {
         const val = Math.min(Math.max(parseInt(char[stat.key]) || 0, 0), 11);
@@ -671,8 +605,7 @@
         const sa = stat.angle - sliceAngle / 2;
         const ea = stat.angle + sliceAngle / 2;
         for (let ring = 1; ring <= val; ring++) {
-          const oR = (ring / rings) * maxR;
-          const iR = ((ring - 1) / rings) * maxR;
+          const oR = (ring / rings) * maxR, iR = ((ring - 1) / rings) * maxR;
           const x1 = cx + oR * Math.cos(toRad(sa)), y1 = cy + oR * Math.sin(toRad(sa));
           const x2 = cx + oR * Math.cos(toRad(ea)), y2 = cy + oR * Math.sin(toRad(ea));
           const x3 = cx + iR * Math.cos(toRad(ea)), y3 = cy + iR * Math.sin(toRad(ea));
@@ -684,7 +617,6 @@
         }
       });
 
-      // Ring outlines
       for (let ring = 1; ring <= rings; ring++) {
         const r = (ring / rings) * maxR;
         const c = document.createElementNS(ns, 'circle');
@@ -695,7 +627,6 @@
         svg.appendChild(c);
       }
 
-      // Axis lines
       [-135, -90, -45, 0, 45, 90, 135, 180].forEach(angle => {
         const p = pt(angle, maxR);
         const line = document.createElementNS(ns, 'line');
@@ -705,24 +636,22 @@
         svg.appendChild(line);
       });
 
-      // Outer border
       const border = document.createElementNS(ns, 'circle');
       border.setAttribute('cx', cx); border.setAttribute('cy', cy);
       border.setAttribute('r', maxR); border.setAttribute('fill', 'none');
       border.setAttribute('stroke', '#111'); border.setAttribute('stroke-width', '1.5');
       svg.appendChild(border);
 
-      // Labels
       const descriptors = ['Terrible','Poor','Mediocre','Average','Fair','Good','Great','Superb','Fantastic','Epic','Legendary','Cosmic'];
       stats.forEach(stat => {
         const val = Math.min(Math.max(parseInt(char[stat.key]) || 0, 0), 11);
-        const p = pt(stat.angle, labelOffset);
+        const p = pt(stat.angle, maxR + 40);
 
         const label = document.createElementNS(ns, 'text');
         label.setAttribute('x', p.x); label.setAttribute('y', p.y + stat.yOffset);
         label.setAttribute('text-anchor', 'middle'); label.setAttribute('dominant-baseline', 'middle');
         label.setAttribute('font-family', 'Red Circle, sans-serif');
-        label.setAttribute('font-size', labelFontSize);
+        label.setAttribute('font-size', '10');
         label.setAttribute('fill', '#111');
         label.textContent = `${stat.label.toUpperCase()} ${val}`;
         svg.appendChild(label);
@@ -731,7 +660,7 @@
         desc.setAttribute('x', p.x); desc.setAttribute('y', p.y + 11 + stat.yOffset);
         desc.setAttribute('text-anchor', 'middle'); desc.setAttribute('dominant-baseline', 'middle');
         desc.setAttribute('font-family', 'Lucida Sans, sans-serif');
-        desc.setAttribute('font-size', descFontSize);
+        desc.setAttribute('font-size', '10');
         desc.setAttribute('fill', '#111');
         desc.textContent = descriptors[val] || '';
         svg.appendChild(desc);
