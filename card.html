@@ -259,8 +259,6 @@
   border: 3px solid #111;
   border-radius: 12px;
   padding: 8px;
-  display: flex;
-  flex-direction: column;
 }
 
 .bio-fields {
@@ -307,19 +305,16 @@
   white-space: pre-wrap;
 }
 
+.sheet-ability {
+  display: flex;
+  flex-direction: column;
+}
+
 #radarContainer {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 0;
-  min-width: 0;
-}
-
-#radarChart {
-  width: 100%;
-  height: 100%;
-  display: block;
 }
   </style>
   
@@ -375,7 +370,7 @@
             <div class="sheet-ability">
               <div class="sheet-section-title">Ability Profile</div>
               <div id="radarContainer">
-                <svg id="radarChart" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>
+                <svg id="radarChart" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg"></svg>
               </div>
             </div>
           </div>
@@ -521,7 +516,7 @@ function drawRadar(char) {
   const svg = document.getElementById('radarChart');
   svg.innerHTML = '';
 
-  const cx = 150, cy = 150, maxR = 50;
+  const cx = 150, cy = 150, maxR = 130;
   const rings = 11;
   const ringColors = [
     '#8B0000','#B43C00','#DC3C00','#EB5F00','#F27D00',
@@ -529,14 +524,14 @@ function drawRadar(char) {
   ];
 
   const stats = [
-    { key: 'senses',     label: 'Senses',     angle: -157.5 },
-    { key: 'fighting',   label: 'Fighting',   angle: -67.5  },
-    { key: 'speed',      label: 'Speed',      angle: -22.5  },
-    { key: 'strength',   label: 'Strength',   angle: 22.5   },
-    { key: 'durability', label: 'Durability', angle: 67.5   },
-    { key: 'will',       label: 'Will',       angle: 112.5  },
-    { key: 'intellect',  label: 'Intellect',  angle: 157.5  },
-    { key: 'projection', label: 'Projection', angle: -112.5 },
+    { key: 'projection', label: 'Projection', angle: -135 },
+    { key: 'fighting',   label: 'Fighting',   angle: -45  },
+    { key: 'speed',      label: 'Speed',      angle: 0    },
+    { key: 'strength',   label: 'Strength',   angle: 45   },
+    { key: 'durability', label: 'Durability', angle: 90   },
+    { key: 'will',       label: 'Will',       angle: 135  },
+    { key: 'intellect',  label: 'Intellect',  angle: 180  },
+    { key: 'senses',     label: 'Senses',     angle: -90  },
   ];
 
   const toRad = deg => deg * Math.PI / 180;
@@ -600,19 +595,18 @@ function drawRadar(char) {
     svg.appendChild(circle);
   }
 
-  // Axis lines - fixed at 45 degree increments
-const axisAngles = [-135, -90, -45, 0, 45, 90, 135, 180];
-axisAngles.forEach(angle => {
-  const pt = ptOnAxis(angle, maxR);
-  const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-  line.setAttribute('x1', cx);
-  line.setAttribute('y1', cy);
-  line.setAttribute('x2', pt.x);
-  line.setAttribute('y2', pt.y);
-  line.setAttribute('stroke', '#111');
-  line.setAttribute('stroke-width', '1');
-  svg.appendChild(line);
-});
+  // Axis lines
+  stats.forEach(stat => {
+    const pt = ptOnAxis(stat.angle, maxR);
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('x1', cx);
+    line.setAttribute('y1', cy);
+    line.setAttribute('x2', pt.x);
+    line.setAttribute('y2', pt.y);
+    line.setAttribute('stroke', '#111');
+    line.setAttribute('stroke-width', '1');
+    svg.appendChild(line);
+  });
 
   // Outer border
   const border = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
@@ -623,35 +617,6 @@ axisAngles.forEach(angle => {
   border.setAttribute('stroke', '#111');
   border.setAttribute('stroke-width', '1.5');
   svg.appendChild(border);
-
-  const descriptors = ['Terrible','Poor','Mediocre','Average','Fair','Good','Great','Superb','Fantastic','Epic','Legendary','Cosmic'];
-
-stats.forEach(stat => {
-  const val = Math.min(Math.max(parseInt(char[stat.key]) || 0, 0), 11);
-  const pt = ptOnAxis(stat.angle, maxR + 30);
-  
-  const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-  label.setAttribute('x', pt.x);
-  label.setAttribute('y', pt.y);
-  label.setAttribute('text-anchor', 'middle');
-  label.setAttribute('dominant-baseline', 'middle');
-  label.setAttribute('font-family', 'Red Circle, sans-serif');
-  label.setAttribute('font-size', '9');
-  label.setAttribute('fill', '#111');
-  label.textContent = `${stat.label.toUpperCase()} ${val}`;
-  svg.appendChild(label);
-
-  const desc = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-  desc.setAttribute('x', pt.x);
-  desc.setAttribute('y', pt.y + 11);
-  desc.setAttribute('text-anchor', 'middle');
-  desc.setAttribute('dominant-baseline', 'middle');
-  desc.setAttribute('font-family', 'Lucida Sans, sans-serif');
-  desc.setAttribute('font-size', '7');
-  desc.setAttribute('fill', '#111');
-  desc.textContent = descriptors[val] || '';
-  svg.appendChild(desc);
-});
 }
     
     async function loadCharacters() {
