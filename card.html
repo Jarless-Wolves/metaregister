@@ -521,7 +521,7 @@ function drawRadar(char) {
   const svg = document.getElementById('radarChart');
   svg.innerHTML = '';
 
-  const cx = 150, cy = 150, maxR = 50;
+  const cx = 150, cy = 150, maxR = 60;
   const rings = 11;
   const ringColors = [
     '#8B0000','#B43C00','#DC3C00','#EB5F00','#F27D00',
@@ -628,7 +628,7 @@ axisAngles.forEach(angle => {
 
 stats.forEach(stat => {
   const val = Math.min(Math.max(parseInt(char[stat.key]) || 0, 0), 11);
-  const pt = ptOnAxis(stat.angle, maxR + 30);
+  const pt = ptOnAxis(stat.angle, maxR + 50);
   
   const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
   label.setAttribute('x', pt.x);
@@ -636,7 +636,7 @@ stats.forEach(stat => {
   label.setAttribute('text-anchor', 'middle');
   label.setAttribute('dominant-baseline', 'middle');
   label.setAttribute('font-family', 'Red Circle, sans-serif');
-  label.setAttribute('font-size', '9');
+  label.setAttribute('font-size', '11');
   label.setAttribute('fill', '#111');
   label.textContent = `${stat.label.toUpperCase()} ${val}`;
   svg.appendChild(label);
@@ -647,7 +647,7 @@ stats.forEach(stat => {
   desc.setAttribute('text-anchor', 'middle');
   desc.setAttribute('dominant-baseline', 'middle');
   desc.setAttribute('font-family', 'Lucida Sans, sans-serif');
-  desc.setAttribute('font-size', '7');
+  desc.setAttribute('font-size', '9');
   desc.setAttribute('fill', '#111');
   desc.textContent = descriptors[val] || '';
   svg.appendChild(desc);
