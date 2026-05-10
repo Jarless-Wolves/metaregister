@@ -373,7 +373,7 @@
               <div class="powers-text" id="powerText"></div>
             </div>
             <div class="sheet-ability">
-              <div class="sheet-section-title">Ability Profile 70</div>
+              <div class="sheet-section-title">Ability Profile 70-10</div>
               <div id="radarContainer">
                 <svg id="radarChart" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg"></svg>
               </div>
@@ -636,7 +636,7 @@ stats.forEach(stat => {
   label.setAttribute('text-anchor', 'middle');
   label.setAttribute('dominant-baseline', 'middle');
   label.setAttribute('font-family', 'Red Circle, sans-serif');
-  label.setAttribute('font-size', '9');
+  label.setAttribute('font-size', '10');
   label.setAttribute('fill', '#111');
   label.textContent = `${stat.label.toUpperCase()} ${val}`;
   svg.appendChild(label);
@@ -647,7 +647,7 @@ stats.forEach(stat => {
   desc.setAttribute('text-anchor', 'middle');
   desc.setAttribute('dominant-baseline', 'middle');
   desc.setAttribute('font-family', 'Lucida Sans, sans-serif');
-  desc.setAttribute('font-size', '7');
+  desc.setAttribute('font-size', '10');
   desc.setAttribute('fill', '#111');
   desc.textContent = descriptors[val] || '';
   svg.appendChild(desc);
