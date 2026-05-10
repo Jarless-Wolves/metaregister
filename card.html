@@ -515,6 +515,7 @@
       document.getElementById('bioTrauma').textContent = char.trauma || '';
       document.getElementById('bioBackground').textContent = char.short_bio || '';
       document.getElementById('modalOverlay').classList.add('active');
+      sizeModal();
 
       const powers = char.powers || '';
       const vulner = char.vulnerabilities || '';
