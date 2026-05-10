@@ -321,6 +321,12 @@
   height: 100%;
   display: block;
 }
+
+.ability-fields {
+  font-size: 0.59em;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
   </style>
   
 </head>
@@ -374,6 +380,11 @@
             </div>
             <div class="sheet-ability">
               <div class="sheet-section-title">Ability Profile</div>
+              <div class="ability-fields">
+                <div class="bio-row"><span class="bio-label">Archetypes</span><span class="bio-value" id="abilArchetypes"></span></div>
+                <div class="bio-row"><span class="bio-label">Power Level</span><span class="bio-value" id="abilPowerLevel"></span></div>
+                <div class="bio-row"><span class="bio-label">Power Source</span><span class="bio-value" id="abilPowerSource"></span></div>
+              </div>
               <div id="radarContainer">
                 <svg id="radarChart" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg"></svg>
               </div>
@@ -448,6 +459,9 @@
       const vulner = char.vulnerabilities || '';
       document.getElementById('powerText').textContent = powers + (vulner ? '\n\n' + vulner : '');
       drawRadar(char);
+      document.getElementById('abilArchetypes').textContent = char.archetype || '';
+      document.getElementById('abilPowerLevel').textContent = char.power_level || '';
+      document.getElementById('abilPowerSource').textContent = char.power_origin || '';
     }
 
     // Close modal
