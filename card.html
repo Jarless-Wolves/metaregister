@@ -373,7 +373,7 @@
               <div class="powers-text" id="powerText"></div>
             </div>
             <div class="sheet-ability">
-              <div class="sheet-section-title">Ability Profile 70-10</div>
+              <div class="sheet-section-title">Ability Profile 70-10-40</div>
               <div id="radarContainer">
                 <svg id="radarChart" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg"></svg>
               </div>
@@ -628,7 +628,7 @@ axisAngles.forEach(angle => {
 
 stats.forEach(stat => {
   const val = Math.min(Math.max(parseInt(char[stat.key]) || 0, 0), 11);
-  const pt = ptOnAxis(stat.angle, maxR + 32);
+  const pt = ptOnAxis(stat.angle, maxR + 40);
   
   const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
   label.setAttribute('x', pt.x);
