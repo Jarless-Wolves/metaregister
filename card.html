@@ -221,7 +221,6 @@
   border: 3px solid #111;
   border-radius: 12px;
   padding: 8px;
-  font-size: 0.59em;
 }
 
 .sheet-portrait {
@@ -253,7 +252,6 @@
   border: 3px solid #111;
   border-radius: 12px;
   padding: 8px;
-  font-size: 0.59em;
 }
 
 .sheet-ability {
@@ -314,7 +312,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0;
+  min-height: 0;
+  min-width: 0;
+}
+
+#radarChart {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
   </style>
   
@@ -370,7 +375,7 @@
             <div class="sheet-ability">
               <div class="sheet-section-title">Ability Profile</div>
               <div id="radarContainer">
-                <svg id="radarChart" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg"></svg>
+                <svg id="radarChart" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>
               </div>
             </div>
           </div>
