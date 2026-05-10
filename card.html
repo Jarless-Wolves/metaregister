@@ -516,7 +516,21 @@
       document.getElementById('powerText').textContent = powers + (vulner ? '\n\n' + vulner : '');
       drawRadar(char);
       document.getElementById('abilArchetypes').textContent = char.archetype || '';
-      document.getElementById('abilPowerLevel').textContent = char.power_level || '';
+
+      const stats = [char.strength, char.durability, char.speed, char.fighting, char.senses, char.intellect, char.will, char.projection].map(v => parseInt(v) || 0);
+      const statSum = stats.reduce((a, b) => a + b, 0);
+      const statMax = Math.max(...stats);
+      let powerLevel;
+      if (statSum >= 60) powerLevel = 'Cosmic';
+      else if (statMax >= 11 || statSum >= 56) powerLevel = 'Extreme Meta';
+      else if (statMax >= 10 || statSum >= 52) powerLevel = 'High Meta';
+      else if (statMax >= 9 || statSum >= 48) powerLevel = 'Mid Meta';
+      else if (statMax >= 8 || statSum >= 44) powerLevel = 'Low Meta';
+      else if (statMax >= 7 || statSum >= 40) powerLevel = 'Elite Human';
+      else if (statSum >= 36) powerLevel = 'Expert Human';
+      else powerLevel = 'Normal Human';
+      document.getElementById('abilPowerLevel').textContent = powerLevel;
+      
       document.getElementById('abilPowerSource').textContent = char.power_origin || '';
       const year = char.created_at ? new Date(char.created_at).getFullYear() : new Date().getFullYear();
 document.getElementById('sheetCredit').textContent = char.created_by ? `${char.name} © ${year} by ${char.created_by}. All rights reserved.` : '';
