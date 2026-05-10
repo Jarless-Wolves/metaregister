@@ -518,7 +518,8 @@
       document.getElementById('abilArchetypes').textContent = char.archetype || '';
       document.getElementById('abilPowerLevel').textContent = char.power_level || '';
       document.getElementById('abilPowerSource').textContent = char.power_origin || '';
-      document.getElementById('sheetCredit').textContent = char.created_by ? `${char.name} © 2026 by ${char.created_by}.  All rights reserved.` : '';
+      const year = char.created_at ? new Date(char.created_at).getFullYear() : new Date().getFullYear();
+document.getElementById('sheetCredit').textContent = char.created_by ? `${char.name} © ${year} by ${char.created_by}. All rights reserved.` : '';
     }
 
     // Close modal
