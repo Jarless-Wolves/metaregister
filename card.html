@@ -310,6 +310,16 @@
       text-align: center;
       margin-top: -4px;
     }
+
+    .pub-wip.is-published {
+      color: #ff6b6b;
+      border-color: #cc4444;
+    }
+
+    .pub-wip.is-wip {
+      color: #6bcc6b;
+      border-color: #449944;
+    }
   </style>
 </head>
 <body>
@@ -327,7 +337,7 @@
         <div class="sidebar-tabs"></div>
         <div class="sidebar-spacer"></div>
         <div class="sidebar-admin">
-          <button class="modal-btn admin">Pub</button>
+          <button class="modal-btn admin pub-wip" id="btnPublish">WIP</button>
           <button class="modal-btn admin">New</button>
           <button class="modal-btn admin">Del</button>
         </div>
@@ -497,6 +507,10 @@
       const year = char.created_at ? new Date(char.created_at).getFullYear() : new Date().getFullYear();
       document.getElementById('sheetCredit').textContent = char.created_by ? `${char.name} \u00A9 ${year} by ${char.created_by}. All rights reserved.` : '';
 
+      const pubBtn = document.getElementById('btnPublish');
+      pubBtn.textContent = char.publish ? 'PUB' : 'WIP';
+      pubBtn.className = 'modal-btn admin pub-wip ' + (char.publish ? 'is-published' : 'is-wip');
+      
       sizeModal();
       requestAnimationFrame(() => drawRadar(char));
     }
