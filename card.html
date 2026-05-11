@@ -39,10 +39,7 @@
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       box-shadow: 6px 8px 8px rgba(15, 22, 30, 1.0);
     }
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 8px 10px 12px rgba(15, 22, 30, 1.0);
-    }
+    .card:hover { transform: translateY(-4px); box-shadow: 8px 10px 12px rgba(15, 22, 30, 1.0); }
     .card-name {
       font-family: 'Bebas Neue', sans-serif;
       font-weight: bold;
@@ -66,12 +63,7 @@
     }
     .card-name .letter { display: block; text-align: center; width: 100%; }
     .card-name .space { display: block; height: 0.4em; }
-    .card-image {
-      flex: 1;
-      background-size: cover;
-      background-position: top center;
-      position: relative;
-    }
+    .card-image { flex: 1; background-size: cover; background-position: top center; position: relative; }
 
     /* === MODAL OVERLAY === */
     .modal-overlay {
@@ -139,16 +131,13 @@
     .modal-btn.admin { color: #aac4e0; border-color: #7a9fc0; cursor: default; font-size: 11px; }
     #btnPrev, #btnNext { border: none; }
 
-    /* === SHEET === */
-    /* All sizing driven by --sw (sheet width in px) set by JavaScript */
-    .modal-sheet {
-      flex: 1;
-      background: #fff;
-      overflow: hidden;
-      display: flex;
-      padding: 0;
-    }
+    .sidebar-tools { display: flex; flex-direction: column; align-items: center; gap: 6px; width: 100%; padding: 0 6px; margin-top: 6px; }
+    .modal-btn.tool { border: none; font-size: 15px; }
 
+    .pub-wip.is-published { color: #ff6b6b; border-color: #cc4444; }
+    .pub-wip.is-wip { color: #6bcc6b; border-color: #449944; }
+
+    /* === SHEET (shared styles for both fitted and full-size) === */
     .sheet {
       width: 100%;
       height: 100%;
@@ -158,7 +147,6 @@
       flex-direction: column;
       gap: calc(var(--sw) * 0.013);
     }
-
     .sheet-title {
       border: calc(var(--sw) * 0.004) solid #111;
       border-radius: calc(var(--sw) * 0.018);
@@ -173,178 +161,92 @@
       letter-spacing: 0.05em;
       text-transform: uppercase;
     }
-
-    .sheet-middle {
-      display: flex;
-      gap: calc(var(--sw) * 0.013);
-      height: 44%;
-      flex-shrink: 0;
-    }
-
-    .sheet-bio {
-      width: 54%;
-      border: calc(var(--sw) * 0.004) solid #111;
-      border-radius: calc(var(--sw) * 0.018);
-      padding: calc(var(--sw) * 0.012);
-    }
-
-    .sheet-portrait {
-      flex: 1;
-      border: calc(var(--sw) * 0.004) solid #111;
-      border-radius: calc(var(--sw) * 0.018);
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
-    }
-
-    .sheet-section-title {
-      font-family: 'Red Circle', sans-serif;
-      font-size: calc(var(--sw) * 0.027);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      text-align: center;
-    }
-
-    .sheet-bottom {
-      display: flex;
-      gap: calc(var(--sw) * 0.013);
-      height: 46%;
-      flex-shrink: 0;
-    }
-
-    .sheet-powers {
-      width: 46%;
-      border: calc(var(--sw) * 0.004) solid #111;
-      border-radius: calc(var(--sw) * 0.018);
-      padding: calc(var(--sw) * 0.012);
-    }
-
-    .sheet-ability {
-      flex: 1;
-      border: calc(var(--sw) * 0.004) solid #111;
-      border-radius: calc(var(--sw) * 0.018);
-      padding: calc(var(--sw) * 0.012);
-      display: flex;
-      flex-direction: column;
-    }
-
-    .bio-fields {
-      display: flex;
-      flex-direction: column;
-      gap: calc(var(--sw) * 0.004);
-      font-size: calc(var(--sw) * 0.017);
-      margin-top: calc(var(--sw) * 0.01);
-    }
-
-    .bio-group {
-      display: flex;
-      flex-direction: column;
-      margin-bottom: calc(var(--sw) * 0.006);
-    }
-
+    .sheet-middle { display: flex; gap: calc(var(--sw) * 0.013); height: 44%; flex-shrink: 0; }
+    .sheet-bio { width: 54%; border: calc(var(--sw) * 0.004) solid #111; border-radius: calc(var(--sw) * 0.018); padding: calc(var(--sw) * 0.012); }
+    .sheet-portrait { flex: 1; border: calc(var(--sw) * 0.004) solid #111; border-radius: calc(var(--sw) * 0.018); background-size: contain; background-repeat: no-repeat; background-position: center; }
+    .sheet-section-title { font-family: 'Red Circle', sans-serif; font-size: calc(var(--sw) * 0.027); text-transform: uppercase; letter-spacing: 0.05em; text-align: center; }
+    .sheet-bottom { display: flex; gap: calc(var(--sw) * 0.013); height: 46%; flex-shrink: 0; }
+    .sheet-powers { width: 46%; border: calc(var(--sw) * 0.004) solid #111; border-radius: calc(var(--sw) * 0.018); padding: calc(var(--sw) * 0.012); }
+    .sheet-ability { flex: 1; border: calc(var(--sw) * 0.004) solid #111; border-radius: calc(var(--sw) * 0.018); padding: calc(var(--sw) * 0.012); display: flex; flex-direction: column; }
+    .bio-fields { display: flex; flex-direction: column; gap: calc(var(--sw) * 0.004); font-size: calc(var(--sw) * 0.017); margin-top: calc(var(--sw) * 0.01); }
+    .bio-group { display: flex; flex-direction: column; margin-bottom: calc(var(--sw) * 0.006); }
     .bio-row { display: flex; gap: 6px; }
-
-    .bio-label {
-      font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
-      font-weight: bold;
-      min-width: calc(var(--sw) * 0.1);
-      flex-shrink: 0;
-    }
-
-    .bio-value {
-      font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
-    }
-
-    .bio-description {
-      margin-top: calc(var(--sw) * 0.005);
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .powers-text {
-      font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
-      font-size: calc(var(--sw) * 0.017);
-      margin-top: calc(var(--sw) * 0.01);
-      white-space: pre-wrap;
-    }
-
-    #radarContainer {
-      flex: 1;
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
-      min-height: 0;
-      min-width: 0;
-    }
-
-    #radarChart {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    .ability-fields {
-      font-size: calc(var(--sw) * 0.017);
-      margin-top: calc(var(--sw) * 0.01);
-      margin-bottom: calc(var(--sw) * 0.005);
-    }
-
-    .radar-legend {
-      display: flex;
-      justify-content: space-between;
-      font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
-      font-size: calc(var(--sw) * 0.013);
-      margin-top: calc(var(--sw) * 0.008);
-      padding: 0 calc(var(--sw) * 0.005);
-    }
-
+    .bio-label { font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif; font-weight: bold; min-width: calc(var(--sw) * 0.1); flex-shrink: 0; }
+    .bio-value { font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif; }
+    .bio-description { margin-top: calc(var(--sw) * 0.005); display: flex; flex-direction: column; gap: 2px; }
+    .powers-text { font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif; font-size: calc(var(--sw) * 0.017); margin-top: calc(var(--sw) * 0.01); white-space: pre-wrap; }
+    .ability-fields { font-size: calc(var(--sw) * 0.017); margin-top: calc(var(--sw) * 0.01); margin-bottom: calc(var(--sw) * 0.005); }
+    .radar-legend { display: flex; justify-content: space-between; font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif; font-size: calc(var(--sw) * 0.013); margin-top: calc(var(--sw) * 0.008); padding: 0 calc(var(--sw) * 0.005); }
     .legend-col { display: flex; flex-direction: column; align-items: center; }
     .legend-header { font-weight: bold; margin-bottom: 2px; }
+    .sheet-credit { font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif; font-size: calc(var(--sw) * 0.016); font-style: italic; color: #80C0FF; text-align: center; margin-top: -4px; }
 
-    .sheet-credit {
-      font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
-      font-size: calc(var(--sw) * 0.016);
-      font-style: italic;
-      color: #80C0FF;
-      text-align: center;
-      margin-top: -4px;
-    }
+    /* === FITTED MODAL SHEET === */
+    .modal-sheet { flex: 1; background: #fff; overflow: hidden; display: flex; padding: 0; }
 
-    .pub-wip.is-published {
-      color: #ff6b6b;
-      border-color: #cc4444;
-    }
+    /* === RADAR (fitted) === */
+    #radarContainer { flex: 1; display: flex; align-items: flex-start; justify-content: center; min-height: 0; min-width: 0; }
+    #radarChart { width: 100%; height: auto; display: block; }
 
-    .pub-wip.is-wip {
-      color: #6bcc6b;
-      border-color: #449944;
-    }
-
-    .sidebar-tools {
-      display: flex;
-      flex-direction: column;
+    /* === FULL SIZE OVERLAY === */
+    #fullOverlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 200;
       align-items: center;
-      gap: 6px;
-      width: 100%;
-      padding: 0 6px;
-      margin-top: 6px;
+      justify-content: center;
+      overflow: auto;
+    }
+    #fullOverlay.active { display: flex; }
+
+    #fullSheet {
+      width: 816px;
+      height: 1056px;
+      background: #fff;
+      position: relative;
+      flex-shrink: 0;
+      --sw: 816px;
     }
 
-    .modal-btn.tool {
+    #fullSheet .sheet {
+      width: 816px;
+      height: 1056px;
+    }
+
+    /* Floating close button on full overlay */
+    #fullClose {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      background: #406080;
       border: none;
-      font-size: 15px;
+      color: #eee;
+      font-size: 20px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 201;
+      display: none;
+      align-items: center;
+      justify-content: center;
     }
+    #fullClose.active { display: flex; }
+    #fullClose:hover { background: #4a7aa0; color: #fff; }
+
+    /* Radar in full overlay */
+    #fullRadarContainer { flex: 1; display: flex; align-items: flex-start; justify-content: center; min-height: 0; min-width: 0; }
+    #fullRadarChart { width: 100%; height: auto; display: block; }
   </style>
-
-<link rel="stylesheet" href="css/all.min.css">
-
+  <link rel="stylesheet" href="css/all.min.css">
 </head>
 <body>
 
+  <!-- Fitted Modal -->
   <div class="modal-overlay" id="modalOverlay">
     <div class="modal" id="modal">
-
       <div class="modal-sidebar">
         <button class="modal-close" id="modalClose">✕</button>
         <div class="sidebar-nav">
@@ -364,10 +266,9 @@
           <button class="modal-btn admin" id="btnDelete"><i class="fa-solid fa-trash"></i></button>
         </div>
       </div>
-
       <div class="modal-sheet" id="modalSheet">
         <div class="sheet" id="sheet">
-          <div class="sheet-title" id="sheetTitle">Ever Star</div>
+          <div class="sheet-title" id="sheetTitle"></div>
           <div class="sheet-middle">
             <div class="sheet-bio">
               <div class="sheet-section-title">Biographical Data</div>
@@ -398,7 +299,7 @@
                 </div>
               </div>
             </div>
-            <div class="sheet-portrait"></div>
+            <div class="sheet-portrait" id="sheetPortrait"></div>
           </div>
           <div class="sheet-bottom">
             <div class="sheet-powers">
@@ -416,31 +317,86 @@
                 <svg id="radarChart" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg"></svg>
               </div>
               <div class="radar-legend">
-                <div class="legend-col">
-                  <div class="legend-header">DISABILITY</div>
-                  <div>0 Terrible</div><div>1 Poor</div><div>2 Mediocre</div>
-                </div>
-                <div class="legend-col">
-                  <div class="legend-header">HUMAN</div>
-                  <div>3 Average</div><div>4 Fair</div><div>5 Good</div><div>6 Great</div>
-                </div>
-                <div class="legend-col">
-                  <div class="legend-header">SUPERIOR</div>
-                  <div>7 Superb</div><div>8 Fantastic</div><div>9 Epic</div><div>10 Legendary</div>
-                </div>
-                <div class="legend-col">
-                  <div class="legend-header">COSMIC</div>
-                  <div>11 Cosmic</div>
-                </div>
+                <div class="legend-col"><div class="legend-header">DISABILITY</div><div>0 Terrible</div><div>1 Poor</div><div>2 Mediocre</div></div>
+                <div class="legend-col"><div class="legend-header">HUMAN</div><div>3 Average</div><div>4 Fair</div><div>5 Good</div><div>6 Great</div></div>
+                <div class="legend-col"><div class="legend-header">SUPERIOR</div><div>7 Superb</div><div>8 Fantastic</div><div>9 Epic</div><div>10 Legendary</div></div>
+                <div class="legend-col"><div class="legend-header">COSMIC</div><div>11 Cosmic</div></div>
               </div>
             </div>
           </div>
           <div class="sheet-credit" id="sheetCredit"></div>
         </div>
       </div>
-
     </div>
   </div>
+
+  <!-- Full Size Overlay -->
+  <div id="fullOverlay">
+    <div id="fullSheet">
+      <div class="sheet">
+        <div class="sheet-title" id="fSheetTitle"></div>
+        <div class="sheet-middle">
+          <div class="sheet-bio">
+            <div class="sheet-section-title">Biographical Data</div>
+            <div class="bio-fields">
+              <div class="bio-group">
+                <div class="bio-row"><span class="bio-label">Identity</span><span class="bio-value" id="fBioIdentity"></span></div>
+                <div class="bio-row"><span class="bio-label">Skin</span><span class="bio-value" id="fBioSkin"></span></div>
+                <div class="bio-row"><span class="bio-label">Hair</span><span class="bio-value" id="fBioHair"></span></div>
+                <div class="bio-row"><span class="bio-label">Eyes</span><span class="bio-value" id="fBioEyes"></span></div>
+                <div class="bio-row"><span class="bio-label">Height</span><span class="bio-value" id="fBioHeight"></span></div>
+                <div class="bio-row"><span class="bio-label">Weight</span><span class="bio-value" id="fBioWeight"></span></div>
+                <div class="bio-row"><span class="bio-label">Age</span><span class="bio-value" id="fBioAge"></span></div>
+              </div>
+              <div class="bio-group">
+                <div class="bio-row"><span class="bio-label">Occupation</span><span class="bio-value" id="fBioOccupation"></span></div>
+              </div>
+              <div class="bio-group">
+                <div class="bio-row"><span class="bio-label">Status</span><span class="bio-value" id="fBioStatus"></span></div>
+                <div class="bio-row"><span class="bio-label">Operations</span><span class="bio-value" id="fBioOperations"></span></div>
+              </div>
+              <div class="bio-group">
+                <div class="bio-row"><span class="bio-label">Motivation</span><span class="bio-value" id="fBioMotivation"></span></div>
+                <div class="bio-row"><span class="bio-label">Trauma</span><span class="bio-value" id="fBioTrauma"></span></div>
+              </div>
+              <div class="bio-description">
+                <div class="bio-label">Background</div>
+                <div class="bio-value" id="fBioBackground"></div>
+              </div>
+            </div>
+          </div>
+          <div class="sheet-portrait" id="fSheetPortrait"></div>
+        </div>
+        <div class="sheet-bottom">
+          <div class="sheet-powers">
+            <div class="sheet-section-title">Powers</div>
+            <div class="powers-text" id="fPowerText"></div>
+          </div>
+          <div class="sheet-ability">
+            <div class="sheet-section-title">Ability Profile</div>
+            <div class="ability-fields">
+              <div class="bio-row"><span class="bio-label">Archetypes</span><span class="bio-value" id="fAbilArchetypes"></span></div>
+              <div class="bio-row"><span class="bio-label">Power Level</span><span class="bio-value" id="fAbilPowerLevel"></span></div>
+              <div class="bio-row"><span class="bio-label">Power Source</span><span class="bio-value" id="fAbilPowerSource"></span></div>
+            </div>
+            <div id="fullRadarContainer">
+              <svg id="fullRadarChart" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg"></svg>
+            </div>
+            <div class="radar-legend">
+              <div class="legend-col"><div class="legend-header">DISABILITY</div><div>0 Terrible</div><div>1 Poor</div><div>2 Mediocre</div></div>
+              <div class="legend-col"><div class="legend-header">HUMAN</div><div>3 Average</div><div>4 Fair</div><div>5 Good</div><div>6 Great</div></div>
+              <div class="legend-col"><div class="legend-header">SUPERIOR</div><div>7 Superb</div><div>8 Fantastic</div><div>9 Epic</div><div>10 Legendary</div></div>
+              <div class="legend-col"><div class="legend-header">COSMIC</div><div>11 Cosmic</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="sheet-credit" id="fSheetCredit"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating close for full overlay -->
+  <button id="fullClose"><i class="fa-solid fa-magnifying-glass-minus"></i></button>
 
   <script>
     const SUPABASE_URL = 'https://aopklhrfxtyhglznelua.supabase.co';
@@ -452,6 +408,7 @@
     const PADDING = 8;
     const RATIO = 11 / 8.5;
     const MIN_SHEET_W = 380;
+    const TRUE_SHEET_W = 816;
 
     function sizeModal() {
       const modal = document.getElementById('modal');
@@ -466,50 +423,43 @@
         sheetH = sheetW * RATIO;
       }
 
-      // Apply minimum floor
       sheetW = Math.max(sheetW, MIN_SHEET_W);
       sheetH = Math.max(sheetH, MIN_SHEET_W * RATIO);
 
       modal.style.width = (sheetW + SIDEBAR_W) + 'px';
       modal.style.height = sheetH + 'px';
-
-      // Set --sw on the sheet element so all calc() expressions scale with it
       document.getElementById('sheet').style.setProperty('--sw', sheetW + 'px');
 
-      // Redraw radar if modal is open
       if (document.getElementById('modalOverlay').classList.contains('active') && characters[currentIndex]) {
-        requestAnimationFrame(() => drawRadar(characters[currentIndex]));
+        requestAnimationFrame(() => drawRadar(characters[currentIndex], 'radarChart'));
       }
     }
 
     window.addEventListener('resize', sizeModal);
     sizeModal();
 
-    function openModal(index) {
-      currentIndex = index;
-      const char = characters[index];
-      document.getElementById('sheetTitle').textContent = char.name;
-      document.querySelector('.sheet-portrait').style.backgroundImage = char.pic_url ? `url('${char.pic_url}')` : '';
-      document.getElementById('bioIdentity').textContent = char.identity || '';
-      document.getElementById('bioSkin').textContent = char.skin || '';
-      document.getElementById('bioHair').textContent = char.hair || '';
-      document.getElementById('bioEyes').textContent = char.eyes || '';
-      document.getElementById('bioHeight').textContent = char.height || '';
-      document.getElementById('bioWeight').textContent = char.weight || '';
-      document.getElementById('bioAge').textContent = char.age || '';
-      document.getElementById('bioOccupation').textContent = char.occupation || '';
-      document.getElementById('bioStatus').textContent = char.status || '';
-      document.getElementById('bioOperations').textContent = char.area_of_operations || '';
-      document.getElementById('bioMotivation').textContent = char.motivation || '';
-      document.getElementById('bioTrauma').textContent = char.trauma || '';
-      document.getElementById('bioBackground').textContent = char.short_bio || '';
-      document.getElementById('modalOverlay').classList.add('active');
+    function populateSheet(char, prefix) {
+      const p = prefix;
+      document.getElementById(p + 'SheetTitle').textContent = char.name;
+      document.getElementById(p + 'SheetPortrait').style.backgroundImage = char.pic_url ? `url('${char.pic_url}')` : '';
+      document.getElementById(p + 'BioIdentity').textContent = char.identity || '';
+      document.getElementById(p + 'BioSkin').textContent = char.skin || '';
+      document.getElementById(p + 'BioHair').textContent = char.hair || '';
+      document.getElementById(p + 'BioEyes').textContent = char.eyes || '';
+      document.getElementById(p + 'BioHeight').textContent = char.height || '';
+      document.getElementById(p + 'BioWeight').textContent = char.weight || '';
+      document.getElementById(p + 'BioAge').textContent = char.age || '';
+      document.getElementById(p + 'BioOccupation').textContent = char.occupation || '';
+      document.getElementById(p + 'BioStatus').textContent = char.status || '';
+      document.getElementById(p + 'BioOperations').textContent = char.area_of_operations || '';
+      document.getElementById(p + 'BioMotivation').textContent = char.motivation || '';
+      document.getElementById(p + 'BioTrauma').textContent = char.trauma || '';
+      document.getElementById(p + 'BioBackground').textContent = char.short_bio || '';
 
       const powers = char.powers || '';
       const vulner = char.vulnerabilities || '';
-      document.getElementById('powerText').textContent = powers + (vulner ? '\n\n' + vulner : '');
-
-      document.getElementById('abilArchetypes').textContent = char.archetype || '';
+      document.getElementById(p + 'PowerText').textContent = powers + (vulner ? '\n\n' + vulner : '');
+      document.getElementById(p + 'AbilArchetypes').textContent = char.archetype || '';
 
       const statVals = [char.strength, char.durability, char.speed, char.fighting, char.senses, char.intellect, char.will, char.projection].map(v => parseInt(v) || 0);
       const statSum = statVals.reduce((a, b) => a + b, 0);
@@ -523,38 +473,87 @@
       else if (statMax >= 7 || statSum >= 40) powerLevel = 'Elite Human';
       else if (statSum >= 36) powerLevel = 'Expert Human';
       else powerLevel = 'Normal Human';
-      document.getElementById('abilPowerLevel').textContent = powerLevel;
+      document.getElementById(p + 'AbilPowerLevel').textContent = powerLevel;
+      document.getElementById(p + 'AbilPowerSource').textContent = char.power_origin || '';
 
-      document.getElementById('abilPowerSource').textContent = char.power_origin || '';
       const year = char.created_at ? new Date(char.created_at).getFullYear() : new Date().getFullYear();
-      document.getElementById('sheetCredit').textContent = char.created_by ? `${char.name} \u00A9 ${year} by ${char.created_by}. All rights reserved.` : '';
+      document.getElementById(p + 'SheetCredit').textContent = char.created_by ? `${char.name} \u00A9 ${year} by ${char.created_by}. All rights reserved.` : '';
+    }
+
+    function openModal(index) {
+      currentIndex = index;
+      const char = characters[index];
+      document.getElementById('modalOverlay').classList.add('active');
+      populateSheet(char, '');
 
       const pubBtn = document.getElementById('btnPublish');
       pubBtn.innerHTML = char.publish ? '<i class="fa-solid fa-eye"></i>' : '<i class="fa-solid fa-eye-slash"></i>';
       pubBtn.className = 'modal-btn admin pub-wip ' + (char.publish ? 'is-published' : 'is-wip');
-      
+
       sizeModal();
-      requestAnimationFrame(() => drawRadar(char));
+      requestAnimationFrame(() => drawRadar(char, 'radarChart'));
     }
+
+    function openFullView() {
+      const char = characters[currentIndex];
+      populateSheet(char, 'f');
+      document.getElementById('fullOverlay').classList.add('active');
+      document.getElementById('fullClose').classList.add('active');
+      document.getElementById('btnZoom').innerHTML = '<i class="fa-solid fa-magnifying-glass-minus"></i>';
+      requestAnimationFrame(() => drawRadar(char, 'fullRadarChart'));
+    }
+
+    function closeFullView() {
+      document.getElementById('fullOverlay').classList.remove('active');
+      document.getElementById('fullClose').classList.remove('active');
+      document.getElementById('btnZoom').innerHTML = '<i class="fa-solid fa-magnifying-glass-plus"></i>';
+    }
+
+    document.getElementById('btnZoom').addEventListener('click', () => {
+      if (document.getElementById('fullOverlay').classList.contains('active')) {
+        closeFullView();
+      } else {
+        openFullView();
+      }
+    });
+
+    document.getElementById('fullClose').addEventListener('click', closeFullView);
+
+    document.getElementById('btnPrint').addEventListener('click', () => {
+      const char = characters[currentIndex];
+      populateSheet(char, 'f');
+      document.getElementById('fullOverlay').classList.add('active');
+      requestAnimationFrame(() => {
+        drawRadar(char, 'fullRadarChart');
+        setTimeout(() => {
+          window.print();
+          document.getElementById('fullOverlay').classList.remove('active');
+        }, 300);
+      });
+    });
 
     document.getElementById('modalClose').addEventListener('click', () => {
       document.getElementById('modalOverlay').classList.remove('active');
+      closeFullView();
     });
 
     document.getElementById('modalOverlay').addEventListener('click', (e) => {
       if (e.target === document.getElementById('modalOverlay')) {
         document.getElementById('modalOverlay').classList.remove('active');
+        closeFullView();
       }
     });
 
     document.getElementById('btnPrev').addEventListener('click', () => {
       currentIndex = (currentIndex - 1 + characters.length) % characters.length;
       openModal(currentIndex);
+      if (document.getElementById('fullOverlay').classList.contains('active')) openFullView();
     });
 
     document.getElementById('btnNext').addEventListener('click', () => {
       currentIndex = (currentIndex + 1) % characters.length;
       openModal(currentIndex);
+      if (document.getElementById('fullOverlay').classList.contains('active')) openFullView();
     });
 
     function buildCard(char, index) {
@@ -564,7 +563,6 @@
 
       const nameCol = document.createElement('div');
       nameCol.className = 'card-name';
-
       const name = char.name || '';
       const letters = name.replace(/ /g, '').replace(/[^a-zA-Z0-9]/g, '').length;
       const spaces = (name.match(/ /g) || []).length;
@@ -593,23 +591,18 @@
       const imgCol = document.createElement('div');
       imgCol.className = 'card-image';
       if (char.pic_url) imgCol.style.backgroundImage = `url('${char.pic_url}')`;
-
       card.appendChild(nameCol);
       card.appendChild(imgCol);
       document.body.appendChild(card);
     }
 
-    function drawRadar(char) {
-      const svg = document.getElementById('radarChart');
+    function drawRadar(char, svgId) {
+      const svg = document.getElementById(svgId);
       svg.innerHTML = '';
 
       const cx = 150, cy = 105, maxR = 70;
       const rings = 11;
-      const ringColors = [
-        '#8B0000','#B43C00','#DC3C00','#EB5F00','#F27D00',
-        '#F69B00','#FAB900','#FCD200','#FEE400','#FFF250','#FFFFD2'
-      ];
-
+      const ringColors = ['#8B0000','#B43C00','#DC3C00','#EB5F00','#F27D00','#F69B00','#FAB900','#FCD200','#FEE400','#FFF250','#FFFFD2'];
       const yOff = maxR * 0.17;
       const stats = [
         { key: 'senses',     label: 'Senses',  angle: -157.5, yOffset: 0     },
@@ -623,23 +616,18 @@
       ];
 
       const toRad = deg => deg * Math.PI / 180;
-      const pt = (angle, r) => ({
-        x: cx + r * Math.cos(toRad(angle)),
-        y: cy + r * Math.sin(toRad(angle))
-      });
+      const pt = (angle, r) => ({ x: cx + r * Math.cos(toRad(angle)), y: cy + r * Math.sin(toRad(angle)) });
       const ns = 'http://www.w3.org/2000/svg';
 
       const bg = document.createElementNS(ns, 'circle');
-      bg.setAttribute('cx', cx); bg.setAttribute('cy', cy);
-      bg.setAttribute('r', maxR); bg.setAttribute('fill', '#406080');
+      bg.setAttribute('cx', cx); bg.setAttribute('cy', cy); bg.setAttribute('r', maxR); bg.setAttribute('fill', '#406080');
       svg.appendChild(bg);
 
       const sliceAngle = 360 / 8;
       stats.forEach(stat => {
         const val = Math.min(Math.max(parseInt(char[stat.key]) || 0, 0), 11);
         if (val === 0) return;
-        const sa = stat.angle - sliceAngle / 2;
-        const ea = stat.angle + sliceAngle / 2;
+        const sa = stat.angle - sliceAngle / 2, ea = stat.angle + sliceAngle / 2;
         for (let ring = 1; ring <= val; ring++) {
           const oR = (ring / rings) * maxR, iR = ((ring - 1) / rings) * maxR;
           const x1 = cx + oR * Math.cos(toRad(sa)), y1 = cy + oR * Math.sin(toRad(sa));
@@ -656,8 +644,7 @@
       for (let ring = 1; ring <= rings; ring++) {
         const r = (ring / rings) * maxR;
         const c = document.createElementNS(ns, 'circle');
-        c.setAttribute('cx', cx); c.setAttribute('cy', cy);
-        c.setAttribute('r', r); c.setAttribute('fill', 'none');
+        c.setAttribute('cx', cx); c.setAttribute('cy', cy); c.setAttribute('r', r); c.setAttribute('fill', 'none');
         c.setAttribute('stroke', '#111'); c.setAttribute('stroke-width', '0.8');
         if (ring === 2 || ring === 6) c.setAttribute('stroke-dasharray', '3,2');
         svg.appendChild(c);
@@ -666,38 +653,31 @@
       [-135, -90, -45, 0, 45, 90, 135, 180].forEach(angle => {
         const p = pt(angle, maxR);
         const line = document.createElementNS(ns, 'line');
-        line.setAttribute('x1', cx); line.setAttribute('y1', cy);
-        line.setAttribute('x2', p.x); line.setAttribute('y2', p.y);
+        line.setAttribute('x1', cx); line.setAttribute('y1', cy); line.setAttribute('x2', p.x); line.setAttribute('y2', p.y);
         line.setAttribute('stroke', '#111'); line.setAttribute('stroke-width', '1');
         svg.appendChild(line);
       });
 
       const border = document.createElementNS(ns, 'circle');
-      border.setAttribute('cx', cx); border.setAttribute('cy', cy);
-      border.setAttribute('r', maxR); border.setAttribute('fill', 'none');
-      border.setAttribute('stroke', '#111'); border.setAttribute('stroke-width', '1.5');
+      border.setAttribute('cx', cx); border.setAttribute('cy', cy); border.setAttribute('r', maxR);
+      border.setAttribute('fill', 'none'); border.setAttribute('stroke', '#111'); border.setAttribute('stroke-width', '1.5');
       svg.appendChild(border);
 
       const descriptors = ['Terrible','Poor','Mediocre','Average','Fair','Good','Great','Superb','Fantastic','Epic','Legendary','Cosmic'];
       stats.forEach(stat => {
         const val = Math.min(Math.max(parseInt(char[stat.key]) || 0, 0), 11);
         const p = pt(stat.angle, maxR + 40);
-
         const label = document.createElementNS(ns, 'text');
         label.setAttribute('x', p.x); label.setAttribute('y', p.y + stat.yOffset);
         label.setAttribute('text-anchor', 'middle'); label.setAttribute('dominant-baseline', 'middle');
-        label.setAttribute('font-family', 'Red Circle, sans-serif');
-        label.setAttribute('font-size', '10');
-        label.setAttribute('fill', '#111');
+        label.setAttribute('font-family', 'Red Circle, sans-serif'); label.setAttribute('font-size', '10'); label.setAttribute('fill', '#111');
         label.textContent = `${stat.label.toUpperCase()} ${val}`;
         svg.appendChild(label);
 
         const desc = document.createElementNS(ns, 'text');
         desc.setAttribute('x', p.x); desc.setAttribute('y', p.y + 11 + stat.yOffset);
         desc.setAttribute('text-anchor', 'middle'); desc.setAttribute('dominant-baseline', 'middle');
-        desc.setAttribute('font-family', 'Lucida Sans, sans-serif');
-        desc.setAttribute('font-size', '10');
-        desc.setAttribute('fill', '#111');
+        desc.setAttribute('font-family', 'Lucida Sans, sans-serif'); desc.setAttribute('font-size', '10'); desc.setAttribute('fill', '#111');
         desc.textContent = descriptors[val] || '';
         svg.appendChild(desc);
       });
@@ -710,10 +690,7 @@
           { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } }
         );
         const data = await response.json();
-        if (!Array.isArray(data)) {
-          document.body.innerHTML = '<p style="color:red">Error: ' + JSON.stringify(data) + '</p>';
-          return;
-        }
+        if (!Array.isArray(data)) { document.body.innerHTML = '<p style="color:red">Error: ' + JSON.stringify(data) + '</p>'; return; }
         characters = data;
         data.forEach((char, i) => buildCard(char, i));
       } catch (err) {
