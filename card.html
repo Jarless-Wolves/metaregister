@@ -572,6 +572,7 @@ async function initAuth() {
   const { data: { session } } = await supabaseClient.auth.getSession();
   currentUser = session?.user ?? null;
   updateAuthUI();
+  loadCharacters();
 
   supabaseClient.auth.onAuthStateChange((_event, session) => {
     currentUser = session?.user ?? null;
@@ -845,7 +846,6 @@ function updateAuthUI() {
 }
 
     initAuth();
-    loadCharacters();
   </script>
 </body>
 </html>
