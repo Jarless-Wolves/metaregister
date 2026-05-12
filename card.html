@@ -708,6 +708,22 @@ document.getElementById('btnSaveNew').addEventListener('click', async () => {
   document.getElementById('modalOverlay').classList.remove('active');
 });
 
+document.getElementById('btnDelete').addEventListener('click', async () => {
+  if (!currentUser) return;
+  const char = characters[currentIndex];
+  const name = char.name || 'this character';
+  if (!confirm(`Delete ${name}? This cannot be undone.`)) return;
+  const { error } = await supabaseClient
+    .from('mhr_characters')
+    .delete()
+    .eq('id', char.id);
+  if (error) { alert('Delete failed: ' + error.message); return; }
+  characters.splice(currentIndex, 1);
+  document.querySelectorAll('.card').forEach(c => c.remove());
+  characters.forEach((c, i) => buildCard(c, i));
+  document.getElementById('modalOverlay').classList.remove('active');
+});
+
 document.getElementById('btnCancelNew').addEventListener('click', () => {
   document.getElementById('sidebarNew').style.display = 'none';
   document.querySelector('.sidebar-admin').style.display = 'flex';
