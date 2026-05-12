@@ -654,6 +654,22 @@ function updateAuthUI() {
     document.getElementById('btnPrint').addEventListener('click', () => {
       window.print();
     });
+
+    document.getElementById('btnPublish').addEventListener('click', async () => {
+  if (!currentUser) return;
+  const char = characters[currentIndex];
+  const newVal = !char.publish;
+  const { error } = await supabaseClient
+    .from('mhr_characters')
+    .update({ publish: newVal })
+    .eq('id', char.id);
+  if (error) { alert('Save failed: ' + error.message); return; }
+  characters[currentIndex].publish = newVal;
+  const pubBtn = document.getElementById('btnPublish');
+  pubBtn.innerHTML = newVal ? '<i class="fa-solid fa-eye"></i>' : '<i class="fa-solid fa-eye-slash"></i>';
+  pubBtn.className = 'modal-btn admin pub-wip ' + (newVal ? 'is-published' : 'is-wip');
+});
+    
     document.getElementById('modalClose').addEventListener('click', () => {
       document.getElementById('modalOverlay').classList.remove('active');
     });
