@@ -582,14 +582,17 @@ async function initAuth() {
 
 function updateAuthUI() {
   const btn = document.getElementById('btnLogin');
+  const adminPanel = document.querySelector('.sidebar-admin');
   if (currentUser) {
     btn.innerHTML = '<i class="fa-brands fa-github"></i>';
     btn.style.color = '#6bcc6b';
     btn.title = 'Logout';
+    adminPanel.style.display = 'flex';
   } else {
     btn.innerHTML = '<i class="fa-brands fa-github"></i>';
     btn.style.color = '#666';
     btn.title = 'Login with GitHub';
+    adminPanel.style.display = 'none';
   }
 }
     
