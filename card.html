@@ -624,9 +624,7 @@ function updateAuthUI() {
       document.getElementById('bioBackground').textContent = char.short_bio || '';
       document.getElementById('modalOverlay').classList.add('active');
 
-      const powers = char.powers || '';
-      const vulner = char.vulnerabilities || '';
-      document.getElementById('powerText').textContent = powers + (vulner ? '\n\n' + vulner : '');
+      document.getElementById('powerText').textContent = char.powers || '';
 
       document.getElementById('abilArchetypes').textContent = char.archetype || '';
 
