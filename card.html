@@ -428,6 +428,10 @@
         <div class="sidebar-spacer"></div>
         <div class="sidebar-tabs"></div>
         <div class="sidebar-spacer"></div>
+        <div class="sidebar-new" id="sidebarNew" style="display:none; flex-direction:column; align-items:center; gap:6px; width:100%; padding:0 6px; padding-bottom:8px;">
+          <button class="modal-btn admin" id="btnSaveNew" title="Save"><i class="fa-solid fa-floppy-disk"></i></button>
+          <button class="modal-btn admin" id="btnCancelNew" title="Cancel"><i class="fa-solid fa-xmark"></i></button>
+        </div>
         <div class="sidebar-admin">
           <button class="modal-btn admin pub-wip" id="btnPublish"><i class="fa-solid fa-eye-slash"></i></button>
           <button class="modal-btn admin" id="btnNew"><i class="fa-solid fa-file-circle-plus"></i></button>
@@ -657,18 +661,59 @@ function updateAuthUI() {
     });
 
     document.getElementById('btnPublish').addEventListener('click', async () => {
+      if (!currentUser) return;
+      const char = characters[currentIndex];
+      const newVal = !char.publish;
+      const { error } = await supabaseClient
+      .from('mhr_characters')
+      .update({ publish: newVal })
+      .eq('id', char.id);
+      if (error) { alert('Save failed: ' + error.message); return; }
+      characters[currentIndex].publish = newVal;
+      const pubBtn = document.getElementById('btnPublish');
+      pubBtn.innerHTML = newVal ? '<i class="fa-solid fa-eye"></i>' : '<i class="fa-solid fa-eye-slash"></i>';
+      pubBtn.className = 'modal-btn admin pub-wip ' + (newVal ? 'is-published' : 'is-wip');
+    });
+
+      document.getElementById('btnNew').addEventListener('click', () => {
   if (!currentUser) return;
-  const char = characters[currentIndex];
-  const newVal = !char.publish;
-  const { error } = await supabaseClient
+  ['sheetTitle','bioIdentity','bioSkin','bioHair','bioEyes','bioHeight','bioWeight',
+   'bioAge','bioOccupation','bioStatus','bioOperations','bioMotivation','bioTrauma',
+   'bioBackground','powerText','abilArchetypes','abilPowerLevel','abilPowerSource','sheetCredit']
+    .forEach(id => document.getElementById(id).textContent = '');
+  document.querySelector('.sheet-portrait').style.backgroundImage = '';
+  document.getElementById('radarChart').innerHTML = '';
+  document.getElementById('sidebarNew').style.display = 'flex';
+  document.getElementById('sidebarNew').style.flexDirection = 'column';
+  document.querySelector('.sidebar-admin').style.display = 'none';
+  document.querySelector('.sidebar-nav').style.display = 'none';
+  document.querySelector('.sidebar-tools').style.display = 'none';
+  document.getElementById('modalOverlay').classList.add('active');
+});
+
+document.getElementById('btnSaveNew').addEventListener('click', async () => {
+  const { data, error } = await supabaseClient
     .from('mhr_characters')
-    .update({ publish: newVal })
-    .eq('id', char.id);
-  if (error) { alert('Save failed: ' + error.message); return; }
-  characters[currentIndex].publish = newVal;
-  const pubBtn = document.getElementById('btnPublish');
-  pubBtn.innerHTML = newVal ? '<i class="fa-solid fa-eye"></i>' : '<i class="fa-solid fa-eye-slash"></i>';
-  pubBtn.className = 'modal-btn admin pub-wip ' + (newVal ? 'is-published' : 'is-wip');
+    .insert([{ publish: false }])
+    .select()
+    .single();
+  if (error) { alert('Create failed: ' + error.message); return; }
+  characters.push(data);
+  buildCard(data, characters.length - 1);
+  currentIndex = characters.length - 1;
+  document.getElementById('sidebarNew').style.display = 'none';
+  document.querySelector('.sidebar-admin').style.display = 'flex';
+  document.querySelector('.sidebar-nav').style.display = 'flex';
+  document.querySelector('.sidebar-tools').style.display = 'flex';
+  document.getElementById('modalOverlay').classList.remove('active');
+});
+
+document.getElementById('btnCancelNew').addEventListener('click', () => {
+  document.getElementById('sidebarNew').style.display = 'none';
+  document.querySelector('.sidebar-admin').style.display = 'flex';
+  document.querySelector('.sidebar-nav').style.display = 'flex';
+  document.querySelector('.sidebar-tools').style.display = 'flex';
+  document.getElementById('modalOverlay').classList.remove('active');
 });
     
     document.getElementById('modalClose').addEventListener('click', () => {
