@@ -674,12 +674,6 @@ function updateAuthUI() {
       document.getElementById('modalOverlay').classList.remove('active');
     });
 
-    document.getElementById('modalOverlay').addEventListener('click', (e) => {
-      if (e.target === document.getElementById('modalOverlay')) {
-        document.getElementById('modalOverlay').classList.remove('active');
-      }
-    });
-
     document.getElementById('btnPrev').addEventListener('click', () => {
       currentIndex = (currentIndex - 1 + characters.length) % characters.length;
       openModal(currentIndex);
