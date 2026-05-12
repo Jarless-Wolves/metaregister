@@ -338,24 +338,42 @@
     }
 
     @media print {
-    body > .card { display: none; }
-    
-    .modal-overlay {
-      display: flex !important;
-      position: static;
-      background: none;
-    }
-    .modal-sidebar { display: none; }
-    .modal {
-      box-shadow: none;
-      border: none;
-      width: 100% !important;
-      height: 100% !important;
-    }
-    .modal-sheet {
-      width: 100% !important;
-    }
+  @page {
+    size: letter portrait;
+    margin: 0;
   }
+  html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: #fff;
+  }
+  body > .card { display: none; }
+  .modal-overlay {
+    display: flex !important;
+    position: static;
+    background: none;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+  }
+  .modal-sidebar { display: none; }
+  .modal {
+    box-shadow: none;
+    border: none;
+    width: 100% !important;
+    height: 100vh !important;
+    margin: 0;
+  }
+  .modal-sheet {
+    width: 100% !important;
+    height: 100% !important;
+  }
+  .sheet {
+    height: 100% !important;
+  }
+}
   </style>
 
 <link rel="stylesheet" href="css/all.min.css">
