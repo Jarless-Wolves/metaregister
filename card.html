@@ -1269,7 +1269,7 @@ document.getElementById('btnSaveEdit').addEventListener('click', async () => {
     power_origin: getMulti('power_origin'),
     short_bio: document.querySelector('#bioBackground .edit-textarea')?.value || null,
     powers: document.querySelector('#powerText .edit-textarea')?.value || null,
-    pic_url: document.querySelector('.sheet-portrait .edit-input')?.value || null,
+    pic_url: characters[currentIndex].pic_url || null,
     created_by: document.querySelector('#sheetCredit .edit-input')?.value || null,
     strength: parseInt(characters[currentIndex].strength) || 0,
     durability: parseInt(characters[currentIndex].durability) || 0,
