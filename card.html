@@ -987,76 +987,109 @@ function updateAuthUI() {
     { key: 'projection', angle: -112.5, yOffset: yOff  },
   ];
 
-  const overlay = document.createElement('div');
-  overlay.id = 'statEditGrid';
-  overlay.style.position = 'absolute';
-  overlay.style.top = '0';
-  overlay.style.left = '0';
-  overlay.style.width = '100%';
-  overlay.style.height = '100%';
-  overlay.style.pointerEvents = 'none';
-  radarContainer.appendChild(overlay);
+  // Store current stat values for edit tracking
+  const statVals = {};
+  statPositions.forEach(({ key }) => {
+    statVals[key] = parseInt(char[key]) || 0;
+  });
+
+  // Draw edit arrows directly in SVG
+  const leftSideKeys = ['senses', 'intellect', 'will', 'projection'];
 
   statPositions.forEach(({ key, angle, yOffset }) => {
     const px = cx + (maxR + 40) * Math.cos(toRad(angle));
     const py = cy + (maxR + 40) * Math.sin(toRad(angle)) + yOffset;
-
-    const xPct = (px / 300) * 100;
-    const yPct = (py / 300) * 100;
-
-    const btnWrapper = document.createElement('div');
-    btnWrapper.style.position = 'absolute';
-    btnWrapper.style.left = `calc(${xPct}% - 20px)`;
-    btnWrapper.style.top = `calc(${yPct}% - 14px)`;
-    btnWrapper.style.width = '40px';
-    btnWrapper.style.display = 'flex';
-    btnWrapper.style.justifyContent = 'space-between';
-    btnWrapper.style.pointerEvents = 'auto';
-    btnWrapper.style.zIndex = '10';
-    btnWrapper.dataset.statKey = key;
-
-    const btnLeft = document.createElement('button');
-    btnLeft.textContent = '◀';
-    btnLeft.style.background = 'none';
-    btnLeft.style.border = 'none';
-    btnLeft.style.cursor = 'pointer';
-    btnLeft.style.fontSize = '10px';
-    btnLeft.style.padding = '0';
-    btnLeft.style.lineHeight = '1';
-    btnLeft.style.color = '#111';
-
-    const btnRight = document.createElement('button');
-    btnRight.textContent = '▶';
-    btnRight.style.background = 'none';
-    btnRight.style.border = 'none';
-    btnRight.style.cursor = 'pointer';
-    btnRight.style.fontSize = '10px';
-    btnRight.style.padding = '0';
-    btnRight.style.lineHeight = '1';
-    btnRight.style.color = '#111';
+    const isLeft = leftSideKeys.includes(key);
 
     const updateStat = (delta) => {
       isDirty = true;
+      statVals[key] = Math.min(11, Math.max(0, statVals[key] + delta));
+      characters[currentIndex][key] = statVals[key];
       const tempChar = { ...characters[currentIndex] };
-      overlay.querySelectorAll('[data-stat-key]').forEach(el => {
-        tempChar[el.dataset.statKey] = parseInt(el.dataset.statVal) || 0;
-      });
-      let newVal = Math.min(11, Math.max(0, (tempChar[key] || 0) + delta));
-      tempChar[key] = newVal;
-      btnWrapper.dataset.statVal = newVal;
-      characters[currentIndex][key] = newVal;
-      drawRadarEdit(tempChar, overlay);
+      Object.assign(tempChar, statVals);
+      drawRadarEdit(tempChar, null);
+      addEditArrows(statVals, statPositions, leftSideKeys);
     };
 
-    btnWrapper.dataset.statVal = parseInt(char[key]) || 0;
-    btnLeft.addEventListener('click', () => updateStat(-1));
-    btnRight.addEventListener('click', () => updateStat(1));
+    const arrowY = py;
+    const gap = 4;
+    const labelGap = 12;
 
-    btnWrapper.appendChild(btnLeft);
-    btnWrapper.appendChild(btnRight);
-    overlay.appendChild(btnWrapper);
-  });
+    // For left-side stats: arrows go LEFT of the label
+    // For right-side stats: arrows go RIGHT of the label
+    let arrowLeftX, arrowRightX;
+    if (isLeft) {
+      arrowRightX = px - labelGap;
+      arrowLeftX = arrowRightX - gap - 8;
+    } else {
+      arrowLeftX = px + labelGap;
+      arrowRightX = arrowLeftX + gap + 8;
     }
+
+    const makeArrow = (x, text, delta) => {
+      const el = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      el.setAttribute('x', x);
+      el.setAttribute('y', arrowY);
+      el.setAttribute('text-anchor', 'middle');
+      el.setAttribute('dominant-baseline', 'middle');
+      el.setAttribute('font-size', '10');
+      el.setAttribute('fill', '#406080');
+      el.setAttribute('cursor', 'pointer');
+      el.setAttribute('font-family', 'sans-serif');
+      el.textContent = text;
+      el.addEventListener('click', () => updateStat(delta));
+      svg.appendChild(el);
+    };
+
+    makeArrow(arrowLeftX, '◀', -1);
+    makeArrow(arrowRightX, '▶', 1);
+  });
+
+  function addEditArrows(statVals, statPositions, leftSideKeys) {
+    // Remove old arrows and redraw
+    // This is handled by drawRadarEdit which calls drawRadar (clears svg) then we re-add arrows
+    // We need to re-add arrows after redraw
+    statPositions.forEach(({ key, angle, yOffset }) => {
+      const px = cx + (maxR + 40) * Math.cos(toRad(angle));
+      const py = cy + (maxR + 40) * Math.sin(toRad(angle)) + yOffset;
+      const isLeft = leftSideKeys.includes(key);
+      const arrowY = py;
+      const gap = 4;
+      const labelGap = 12;
+      let arrowLeftX, arrowRightX;
+      if (isLeft) {
+        arrowRightX = px - labelGap;
+        arrowLeftX = arrowRightX - gap - 8;
+      } else {
+        arrowLeftX = px + labelGap;
+        arrowRightX = arrowLeftX + gap + 8;
+      }
+      const makeArrow = (x, text, delta) => {
+        const el = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        el.setAttribute('x', x);
+        el.setAttribute('y', arrowY);
+        el.setAttribute('text-anchor', 'middle');
+        el.setAttribute('dominant-baseline', 'middle');
+        el.setAttribute('font-size', '10');
+        el.setAttribute('fill', '#406080');
+        el.setAttribute('cursor', 'pointer');
+        el.setAttribute('font-family', 'sans-serif');
+        el.textContent = text;
+        el.addEventListener('click', () => {
+          isDirty = true;
+          statVals[key] = Math.min(11, Math.max(0, statVals[key] + delta));
+          characters[currentIndex][key] = statVals[key];
+          const tempChar = { ...characters[currentIndex] };
+          Object.assign(tempChar, statVals);
+          drawRadarEdit(tempChar, null);
+          addEditArrows(statVals, statPositions, leftSideKeys);
+        });
+        svg.appendChild(el);
+      };
+      makeArrow(arrowLeftX, '◀', -1);
+      makeArrow(arrowRightX, '▶', 1);
+    });
+  }
     
     function openModal(index) {
       currentIndex = index;
@@ -1222,14 +1255,14 @@ document.getElementById('btnSaveEdit').addEventListener('click', async () => {
     powers: document.querySelector('#powerText .edit-textarea')?.value || null,
     pic_url: document.querySelector('.sheet-portrait .edit-input')?.value || null,
     created_by: document.querySelector('#sheetCredit .edit-input')?.value || null,
-    strength: parseInt(document.querySelector('[data-stat-key="strength"]')?.dataset.statVal) || 0,
-    durability: parseInt(document.querySelector('[data-stat-key="durability"]')?.dataset.statVal) || 0,
-    speed: parseInt(document.querySelector('[data-stat-key="speed"]')?.dataset.statVal) || 0,
-    fighting: parseInt(document.querySelector('[data-stat-key="fighting"]')?.dataset.statVal) || 0,
-    senses: parseInt(document.querySelector('[data-stat-key="senses"]')?.dataset.statVal) || 0,
-    intellect: parseInt(document.querySelector('[data-stat-key="intellect"]')?.dataset.statVal) || 0,
-    will: parseInt(document.querySelector('[data-stat-key="will"]')?.dataset.statVal) || 0,
-    projection: parseInt(document.querySelector('[data-stat-key="projection"]')?.dataset.statVal) || 0,
+    strength: parseInt(characters[currentIndex].strength) || 0,
+    durability: parseInt(characters[currentIndex].durability) || 0,
+    speed: parseInt(characters[currentIndex].speed) || 0,
+    fighting: parseInt(characters[currentIndex].fighting) || 0,
+    senses: parseInt(characters[currentIndex].senses) || 0,
+    intellect: parseInt(characters[currentIndex].intellect) || 0,
+    will: parseInt(characters[currentIndex].will) || 0,
+    projection: parseInt(characters[currentIndex].projection) || 0,
   };
 
   const { error } = await supabaseClient
