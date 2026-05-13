@@ -384,7 +384,7 @@
   background: #1a1a1a;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   padding: 0 16px;
   z-index: 50;
 }
@@ -511,6 +511,13 @@
   font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
   font-size: inherit;
   white-space: nowrap;
+
+  #topBarTitle {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 15px;
+    letter-spacing: 0.08em;
+    color: #aaa;
+  }
 }
 
 .custom-multiselect-panel label:hover {
@@ -535,6 +542,7 @@
 <body>
 
 <div id="topBar">
+  <span id="topBarTitle">O.L.y<span style="text-transform:uppercase">M</span>.P.U.S. Metahuman Registry</span>
   <button id="btnLogin" onclick="handleLogin()">
     <i class="fa-brands fa-github"></i>
   </button>
