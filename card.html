@@ -821,8 +821,12 @@ function updateAuthUI() {
       radarContainer.style.position = '';
       radarContainer.innerHTML = '<svg id="radarChart" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg"></svg>';
       const portraitEl = document.querySelector('.sheet-portrait');
-      const portraitInput = portraitEl.querySelector('.edit-input');
-      if (portraitInput) portraitEl.removeChild(portraitInput);
+const portraitInput = portraitEl.querySelector('.edit-input');
+if (portraitInput) portraitEl.removeChild(portraitInput);
+const uploadBtn = portraitEl.querySelector('.portrait-upload-btn');
+if (uploadBtn) portraitEl.removeChild(uploadBtn);
+const orphanedFileInput = document.body.querySelector('input[type="file"]');
+if (orphanedFileInput) document.body.removeChild(orphanedFileInput);
     }
 
     function populateEditMode() {
@@ -928,7 +932,7 @@ function updateAuthUI() {
   powerTextEl.textContent = '';
   powerTextEl.appendChild(powerTextarea);
 
-  // === PORTRAIT URL ===
+ // === PORTRAIT URL ===
 const portraitEl = document.querySelector('.sheet-portrait');
 portraitEl.style.position = 'relative';
 
@@ -936,11 +940,13 @@ portraitEl.style.position = 'relative';
 const fileInput = document.createElement('input');
 fileInput.type = 'file';
 fileInput.accept = 'image/*';
-fileInput.style.display = 'none';
-portraitEl.appendChild(fileInput);
+fileInput.style.position = 'fixed';
+fileInput.style.top = '-9999px';
+document.body.appendChild(fileInput);
 
 // Upload button (top-right corner)
 const uploadBtn = document.createElement('button');
+uploadBtn.type = 'button';
 uploadBtn.className = 'portrait-upload-btn';
 uploadBtn.innerHTML = '<i class="fa-solid fa-image"></i>';
 uploadBtn.title = 'Upload image';
@@ -964,7 +970,11 @@ urlInput.addEventListener('input', () => {
 portraitEl.appendChild(urlInput);
 
 // Wire up upload
-uploadBtn.addEventListener('click', () => fileInput.click());
+uploadBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  fileInput.click();
+});
 
 fileInput.addEventListener('change', async () => {
   const file = fileInput.files[0];
