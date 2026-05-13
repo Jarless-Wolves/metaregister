@@ -456,6 +456,66 @@
   border-color: #1a60b0;
   background: #f0f8ff;
 }
+
+    /* === CUSTOM MULTISELECT === */
+.custom-multiselect {
+  position: relative;
+  width: 100%;
+}
+
+.custom-multiselect-display {
+  border: 1px solid #4a90d9;
+  border-radius: 2px;
+  padding: 0 2px;
+  cursor: pointer;
+  background: transparent;
+  font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
+  font-size: inherit;
+  color: #111;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 1.2em;
+  line-height: 1.2em;
+}
+
+.custom-multiselect-display:hover {
+  border-color: #1a60b0;
+  background: #f0f8ff;
+}
+
+.custom-multiselect-panel {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 200;
+  background: #fff;
+  border: 1px solid #4a90d9;
+  border-radius: 2px;
+  padding: 4px;
+  min-width: 150px;
+  box-shadow: 2px 4px 8px rgba(0,0,0,0.15);
+}
+
+.custom-multiselect-panel.open {
+  display: block;
+}
+
+.custom-multiselect-panel label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 4px;
+  cursor: pointer;
+  font-family: 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
+  font-size: inherit;
+  white-space: nowrap;
+}
+
+.custom-multiselect-panel label:hover {
+  background: #f0f8ff;
+}
   </style>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -670,6 +730,50 @@ function updateAuthUI() {
     window.addEventListener('resize', sizeModal);
     sizeModal();
 
+    function createMultiSelect(field, options, currentValues) {
+  const container = document.createElement('div');
+  container.className = 'custom-multiselect';
+  container.dataset.field = field;
+
+  const display = document.createElement('div');
+  display.className = 'custom-multiselect-display';
+  display.textContent = currentValues.length ? currentValues.join(', ') : '—';
+
+  const panel = document.createElement('div');
+  panel.className = 'custom-multiselect-panel';
+
+  options.forEach(opt => {
+    const label = document.createElement('label');
+    const cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.value = opt;
+    cb.checked = currentValues.includes(opt);
+    cb.addEventListener('change', () => {
+      isDirty = true;
+      const checked = Array.from(panel.querySelectorAll('input:checked')).map(c => c.value);
+      display.textContent = checked.length ? checked.join(', ') : '—';
+    });
+    label.appendChild(cb);
+    label.appendChild(document.createTextNode(' ' + opt));
+    panel.appendChild(label);
+  });
+
+  display.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = panel.classList.contains('open');
+    document.querySelectorAll('.custom-multiselect-panel.open').forEach(p => p.classList.remove('open'));
+    if (!isOpen) panel.classList.add('open');
+  });
+
+  document.addEventListener('click', () => {
+    panel.classList.remove('open');
+  });
+
+  container.appendChild(display);
+  container.appendChild(panel);
+  return container;
+}
+    
     function enterEditMode() {
       document.getElementById('sidebarEdit').style.display = 'flex';
       document.getElementById('sidebarEdit').style.flexDirection = 'column';
@@ -770,39 +874,15 @@ function updateAuthUI() {
   multiSelects.forEach(({ id, field, options }) => {
     const el = document.getElementById(id);
     const current = (char[field] || '').split(',').map(s => s.trim()).filter(Boolean);
-    const wrapper = document.createElement('select');
-    wrapper.className = 'edit-select edit-multiselect';
-    wrapper.multiple = true;
-    wrapper.dataset.field = field;
-    options.forEach(opt => {
-      const option = document.createElement('option');
-      option.value = opt;
-      option.textContent = opt;
-      option.selected = current.includes(opt);
-      wrapper.appendChild(option);
-    });
-    wrapper.addEventListener('change', () => isDirty = true);
     el.textContent = '';
-    el.appendChild(wrapper);
+    el.appendChild(createMultiSelect(field, options, current));
   });
 
     // === ORIGIN MULTISELECT ===
   const originEl = document.getElementById('abilPowerSource');
   const currentOrigin = (char.power_origin || '').split(',').map(s => s.trim()).filter(Boolean);
-  const originWrapper = document.createElement('select');
-  originWrapper.className = 'edit-select edit-multiselect';
-  originWrapper.multiple = true;
-  originWrapper.dataset.field = 'power_origin';
-  ORIGIN_OPTIONS.forEach(opt => {
-    const option = document.createElement('option');
-    option.value = opt;
-    option.textContent = opt;
-    option.selected = currentOrigin.includes(opt);
-    originWrapper.appendChild(option);
-  });
-  originWrapper.addEventListener('change', () => isDirty = true);
   originEl.textContent = '';
-  originEl.appendChild(originWrapper);
+  originEl.appendChild(createMultiSelect('power_origin', ORIGIN_OPTIONS, currentOrigin));
 
   // === TEXTAREAS ===
   const bioBackgroundEl = document.getElementById('bioBackground');
@@ -1051,10 +1131,10 @@ document.getElementById('btnSaveEdit').addEventListener('click', async () => {
   const statGrid = document.getElementById('statEditGrid');
 
   const getMulti = (field) => {
-    const wrapper = document.querySelector(`.edit-multiselect[data-field="${field}"]`);
-    if (!wrapper) return '';
-    return Array.from(wrapper.selectedOptions)
-      .map(opt => opt.value).join(', ');
+    const container = document.querySelector(`.custom-multiselect[data-field="${field}"]`);
+    if (!container) return '';
+    return Array.from(container.querySelectorAll('input[type="checkbox"]:checked'))
+      .map(cb => cb.value).join(', ');
   };
 
   const updates = {
