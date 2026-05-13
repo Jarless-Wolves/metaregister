@@ -931,7 +931,8 @@ fileInput.addEventListener('change', async () => {
   const file = fileInput.files[0];
   if (!file) return;
   const ext = file.name.split('.').pop();
-  const path = `${char.id}_${Date.now()}.${ext}`;
+  const safeName = (char.name || char.id).replace(/[^a-zA-Z0-9_-]/g, '_');
+const path = `${safeName}_${Date.now()}.${ext}`;
   const { error } = await supabaseClient.storage
     .from('mhr_pics')
     .upload(path, file, { upsert: true });
