@@ -526,22 +526,6 @@
   height: 100%;
   min-height: 29em;
 }
-
-.portrait-upload-btn {
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  background: #406080;
-  border: none;
-  color: #eee;
-  font-size: 13px;
-  padding: 4px 7px;
-  cursor: pointer;
-  border-radius: 2px;
-  z-index: 10;
-}
-.portrait-upload-btn:hover { background: #4a7aa0; }
-.portrait-upload-btn.uploading { opacity: 0.5; cursor: wait; }
   </style>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -821,12 +805,8 @@ function updateAuthUI() {
       radarContainer.style.position = '';
       radarContainer.innerHTML = '<svg id="radarChart" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg"></svg>';
       const portraitEl = document.querySelector('.sheet-portrait');
-const portraitInput = portraitEl.querySelector('.edit-input');
-if (portraitInput) portraitEl.removeChild(portraitInput);
-const uploadBtn = portraitEl.querySelector('.portrait-upload-btn');
-if (uploadBtn) portraitEl.removeChild(uploadBtn);
-const orphanedFileInput = document.body.querySelector('input[type="file"]');
-if (orphanedFileInput) document.body.removeChild(orphanedFileInput);
+      const portraitInput = portraitEl.querySelector('.edit-input');
+      if (portraitInput) portraitEl.removeChild(portraitInput);
     }
 
     function populateEditMode() {
@@ -932,67 +912,24 @@ if (orphanedFileInput) document.body.removeChild(orphanedFileInput);
   powerTextEl.textContent = '';
   powerTextEl.appendChild(powerTextarea);
 
- // === PORTRAIT URL ===
-const portraitEl = document.querySelector('.sheet-portrait');
-portraitEl.style.position = 'relative';
-
-// Hidden file input
-const fileInput = document.createElement('input');
-fileInput.type = 'file';
-fileInput.accept = 'image/*';
-fileInput.style.position = 'fixed';
-fileInput.style.top = '-9999px';
-document.body.appendChild(fileInput);
-
-// Upload button (top-right corner)
-const uploadBtn = document.createElement('button');
-uploadBtn.type = 'button';
-uploadBtn.className = 'portrait-upload-btn';
-uploadBtn.innerHTML = '<i class="fa-solid fa-image"></i>';
-uploadBtn.title = 'Upload image';
-portraitEl.appendChild(uploadBtn);
-
-// Wire up upload
-uploadBtn.addEventListener('click', (e) => {
-  e.preventDefault();
-  e.stopPropagation();
-  fileInput.click();
-});
-
-fileInput.addEventListener('change', async () => {
-  const file = fileInput.files[0];
-  if (!file) return;
-
-  uploadBtn.classList.add('uploading');
-  uploadBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
-
-  const ext = file.name.split('.').pop();
-  const path = `${char.name}.${ext}`;
-
-  const { error: upErr } = await supabaseClient.storage
-    .from('mhr_pics')
-    .upload(path, file, { upsert: true });
-
-  if (upErr) {
-    alert('Upload failed: ' + upErr.message);
-    uploadBtn.classList.remove('uploading');
-    uploadBtn.innerHTML = '<i class="fa-solid fa-image"></i>';
-    return;
-  }
-
-  const { data: urlData } = supabaseClient.storage
-    .from('mhr_pics')
-    .getPublicUrl(path);
-
-  const publicUrl = urlData.publicUrl;
-characters[currentIndex].pic_url = publicUrl;
-portraitEl.style.backgroundImage = `url('${publicUrl}')`;
-  isDirty = true;
-
-  uploadBtn.classList.remove('uploading');
-  uploadBtn.innerHTML = '<i class="fa-solid fa-check"></i>';
-  setTimeout(() => { uploadBtn.innerHTML = '<i class="fa-solid fa-image"></i>'; }, 2000);
-});
+  // === PORTRAIT URL ===
+  const portraitEl = document.querySelector('.sheet-portrait');
+  const urlInput = document.createElement('input');
+  urlInput.type = 'text';
+  urlInput.className = 'edit-input';
+  urlInput.placeholder = 'Image URL';
+  urlInput.value = char.pic_url || '';
+  urlInput.style.position = 'absolute';
+  urlInput.style.bottom = '4px';
+  urlInput.style.left = '4px';
+  urlInput.style.right = '4px';
+  urlInput.style.width = 'calc(100% - 8px)';
+  urlInput.addEventListener('input', () => {
+    isDirty = true;
+    portraitEl.style.backgroundImage = urlInput.value ? `url('${urlInput.value}')` : '';
+  });
+  portraitEl.style.position = 'relative';
+  portraitEl.appendChild(urlInput);
 
   // === CREATED BY ===
   const creditEl = document.getElementById('sheetCredit');
@@ -1317,7 +1254,7 @@ document.getElementById('btnSaveEdit').addEventListener('click', async () => {
     power_origin: getMulti('power_origin'),
     short_bio: document.querySelector('#bioBackground .edit-textarea')?.value || null,
     powers: document.querySelector('#powerText .edit-textarea')?.value || null,
-    pic_url: characters[currentIndex].pic_url || null,
+    pic_url: document.querySelector('.sheet-portrait .edit-input')?.value || null,
     created_by: document.querySelector('#sheetCredit .edit-input')?.value || null,
     strength: parseInt(characters[currentIndex].strength) || 0,
     durability: parseInt(characters[currentIndex].durability) || 0,
