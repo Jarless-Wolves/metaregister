@@ -770,22 +770,18 @@ function updateAuthUI() {
   multiSelects.forEach(({ id, field, options }) => {
     const el = document.getElementById(id);
     const current = (char[field] || '').split(',').map(s => s.trim()).filter(Boolean);
-    const wrapper = document.createElement('div');
-    wrapper.className = 'edit-multiselect';
+    const wrapper = document.createElement('select');
+    wrapper.className = 'edit-select edit-multiselect';
+    wrapper.multiple = true;
     wrapper.dataset.field = field;
     options.forEach(opt => {
-      const label = document.createElement('label');
-      label.style.display = 'block';
-      label.style.fontSize = 'inherit';
-      const cb = document.createElement('input');
-      cb.type = 'checkbox';
-      cb.value = opt;
-      cb.checked = current.includes(opt);
-      cb.addEventListener('change', () => isDirty = true);
-      label.appendChild(cb);
-      label.appendChild(document.createTextNode(' ' + opt));
-      wrapper.appendChild(label);
+      const option = document.createElement('option');
+      option.value = opt;
+      option.textContent = opt;
+      option.selected = current.includes(opt);
+      wrapper.appendChild(option);
     });
+    wrapper.addEventListener('change', () => isDirty = true);
     el.textContent = '';
     el.appendChild(wrapper);
   });
@@ -793,22 +789,18 @@ function updateAuthUI() {
     // === ORIGIN MULTISELECT ===
   const originEl = document.getElementById('abilPowerSource');
   const currentOrigin = (char.power_origin || '').split(',').map(s => s.trim()).filter(Boolean);
-  const originWrapper = document.createElement('div');
-  originWrapper.className = 'edit-multiselect';
+  const originWrapper = document.createElement('select');
+  originWrapper.className = 'edit-select edit-multiselect';
+  originWrapper.multiple = true;
   originWrapper.dataset.field = 'power_origin';
   ORIGIN_OPTIONS.forEach(opt => {
-    const label = document.createElement('label');
-    label.style.display = 'block';
-    label.style.fontSize = 'inherit';
-    const cb = document.createElement('input');
-    cb.type = 'checkbox';
-    cb.value = opt;
-    cb.checked = currentOrigin.includes(opt);
-    cb.addEventListener('change', () => isDirty = true);
-    label.appendChild(cb);
-    label.appendChild(document.createTextNode(' ' + opt));
-    originWrapper.appendChild(label);
+    const option = document.createElement('option');
+    option.value = opt;
+    option.textContent = opt;
+    option.selected = currentOrigin.includes(opt);
+    originWrapper.appendChild(option);
   });
+  originWrapper.addEventListener('change', () => isDirty = true);
   originEl.textContent = '';
   originEl.appendChild(originWrapper);
 
@@ -1061,8 +1053,8 @@ document.getElementById('btnSaveEdit').addEventListener('click', async () => {
   const getMulti = (field) => {
     const wrapper = document.querySelector(`.edit-multiselect[data-field="${field}"]`);
     if (!wrapper) return '';
-    return Array.from(wrapper.querySelectorAll('input[type="checkbox"]:checked'))
-      .map(cb => cb.value).join(', ');
+    return Array.from(wrapper.selectedOptions)
+      .map(opt => opt.value).join(', ');
   };
 
   const updates = {
