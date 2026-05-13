@@ -802,6 +802,7 @@ function updateAuthUI() {
       document.querySelector('.sidebar-nav').style.display = 'flex';
       document.querySelector('.sidebar-tools').style.display = 'flex';
       const radarContainer = document.getElementById('radarContainer');
+      radarContainer.style.position = '';
       radarContainer.innerHTML = '<svg id="radarChart" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg"></svg>';
       const portraitEl = document.querySelector('.sheet-portrait');
       const portraitInput = portraitEl.querySelector('.edit-input');
@@ -953,28 +954,56 @@ function updateAuthUI() {
     { key: 'projection' },
   ];
 
-  // Replace radar with stat inputs
+  // Draw radar normally then overlay inputs
   const radarContainer = document.getElementById('radarContainer');
   radarContainer.innerHTML = '';
-  const statGrid = document.createElement('div');
-  statGrid.id = 'statEditGrid';
-  statGrid.style.display = 'grid';
-  statGrid.style.gridTemplateColumns = '1fr 1fr';
-  statGrid.style.gap = '4px';
-  statGrid.style.padding = '4px';
-  statGrid.style.width = '100%';
+  radarContainer.style.position = 'relative';
 
-  statFields.forEach(({ key }) => {
-    const row = document.createElement('div');
-    row.style.display = 'flex';
-    row.style.alignItems = 'center';
-    row.style.gap = '4px';
-    row.style.fontSize = 'calc(var(--sw) * 0.017)';
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.id = 'radarChart';
+  svg.setAttribute('viewBox', '0 0 300 300');
+  svg.style.width = '100%';
+  svg.style.height = 'auto';
+  svg.style.display = 'block';
+  radarContainer.appendChild(svg);
 
-    const label = document.createElement('span');
-    label.textContent = key.charAt(0).toUpperCase() + key.slice(1);
-    label.style.fontFamily = 'Lucida Sans, sans-serif';
-    label.style.flex = '1';
+  // Draw the radar with current values
+  drawRadar(char);
+
+  // Overlay inputs on number positions
+  const descriptors = ['Terrible','Poor','Mediocre','Average','Fair','Good','Great','Superb','Fantastic','Epic','Legendary','Cosmic'];
+  const cx = 150, cy = 105, maxR = 70;
+  const toRad = deg => deg * Math.PI / 180;
+  const yOff = maxR * 0.17;
+
+  const statPositions = [
+    { key: 'senses',     angle: -157.5, yOffset: 0     },
+    { key: 'fighting',   angle: -67.5,  yOffset: yOff  },
+    { key: 'speed',      angle: -22.5,  yOffset: 0     },
+    { key: 'strength',   angle: 22.5,   yOffset: 0     },
+    { key: 'durability', angle: 67.5,   yOffset: -yOff },
+    { key: 'will',       angle: 112.5,  yOffset: -yOff },
+    { key: 'intellect',  angle: 157.5,  yOffset: 0     },
+    { key: 'projection', angle: -112.5, yOffset: yOff  },
+  ];
+
+  const overlay = document.createElement('div');
+  overlay.id = 'statEditGrid';
+  overlay.style.position = 'absolute';
+  overlay.style.top = '0';
+  overlay.style.left = '0';
+  overlay.style.width = '100%';
+  overlay.style.height = '100%';
+  overlay.style.pointerEvents = 'none';
+  radarContainer.appendChild(overlay);
+
+  statPositions.forEach(({ key, angle, yOffset }) => {
+    const px = cx + (maxR + 40) * Math.cos(toRad(angle));
+    const py = cy + (maxR + 40) * Math.sin(toRad(angle)) + yOffset;
+
+    // Convert SVG coords to percentage for overlay positioning
+    const xPct = (px / 300) * 100;
+    const yPct = (py / 300) * 100;
 
     const input = document.createElement('input');
     input.type = 'number';
@@ -983,23 +1012,27 @@ function updateAuthUI() {
     input.max = 11;
     input.value = parseInt(char[key]) || 0;
     input.dataset.statKey = key;
+    input.style.position = 'absolute';
+    input.style.left = `calc(${xPct}% - 16px)`;
+    input.style.top = `calc(${yPct}% + 2px)`;
+    input.style.width = '32px';
+    input.style.pointerEvents = 'auto';
+    input.style.textAlign = 'center';
+    input.style.fontSize = '10px';
+    input.style.padding = '0';
+    input.style.zIndex = '10';
+
     input.addEventListener('input', () => {
       isDirty = true;
-      // Live radar update
       const tempChar = { ...characters[currentIndex] };
-      statFields.forEach(({ key: k }) => {
-        const inp = statGrid.querySelector(`[data-stat-key="${k}"]`);
-        if (inp) tempChar[k] = parseInt(inp.value) || 0;
+      overlay.querySelectorAll('[data-stat-key]').forEach(inp => {
+        tempChar[inp.dataset.statKey] = parseInt(inp.value) || 0;
       });
-      drawRadar(tempChar);
+      drawRadarEdit(tempChar, overlay);
     });
 
-    row.appendChild(label);
-    row.appendChild(input);
-    statGrid.appendChild(row);
+    overlay.appendChild(input);
   });
-
-  radarContainer.appendChild(statGrid);
     }
     
     function openModal(index) {
@@ -1138,8 +1171,7 @@ document.getElementById('btnCancelNew').addEventListener('click', () => {
 
 document.getElementById('btnSaveEdit').addEventListener('click', async () => {
   const char = characters[currentIndex];
-  const statGrid = document.getElementById('statEditGrid');
-
+  
   const getMulti = (field) => {
     const container = document.querySelector(`.custom-multiselect[data-field="${field}"]`);
     if (!container) return '';
@@ -1167,14 +1199,14 @@ document.getElementById('btnSaveEdit').addEventListener('click', async () => {
     powers: document.querySelector('#powerText .edit-textarea')?.value || null,
     pic_url: document.querySelector('.sheet-portrait .edit-input')?.value || null,
     created_by: document.querySelector('#sheetCredit .edit-input')?.value || null,
-    strength: parseInt(statGrid?.querySelector('[data-stat-key="strength"]')?.value) || 0,
-    durability: parseInt(statGrid?.querySelector('[data-stat-key="durability"]')?.value) || 0,
-    speed: parseInt(statGrid?.querySelector('[data-stat-key="speed"]')?.value) || 0,
-    fighting: parseInt(statGrid?.querySelector('[data-stat-key="fighting"]')?.value) || 0,
-    senses: parseInt(statGrid?.querySelector('[data-stat-key="senses"]')?.value) || 0,
-    intellect: parseInt(statGrid?.querySelector('[data-stat-key="intellect"]')?.value) || 0,
-    will: parseInt(statGrid?.querySelector('[data-stat-key="will"]')?.value) || 0,
-    projection: parseInt(statGrid?.querySelector('[data-stat-key="projection"]')?.value) || 0,
+    strength: parseInt(document.querySelector('[data-stat-key="strength"]')?.value) || 0,
+    durability: parseInt(document.querySelector('[data-stat-key="durability"]')?.value) || 0,
+    speed: parseInt(document.querySelector('[data-stat-key="speed"]')?.value) || 0,
+    fighting: parseInt(document.querySelector('[data-stat-key="fighting"]')?.value) || 0,
+    senses: parseInt(document.querySelector('[data-stat-key="senses"]')?.value) || 0,
+    intellect: parseInt(document.querySelector('[data-stat-key="intellect"]')?.value) || 0,
+    will: parseInt(document.querySelector('[data-stat-key="will"]')?.value) || 0,
+    projection: parseInt(document.querySelector('[data-stat-key="projection"]')?.value) || 0,
   };
 
   const { error } = await supabaseClient
@@ -1358,6 +1390,25 @@ document.getElementById('btnCancelEdit').addEventListener('click', () => {
       });
     }
 
+    function drawRadarEdit(char, overlay) {
+  drawRadar(char);
+  // Update power level
+  const statVals = ['strength','durability','speed','fighting','senses','intellect','will','projection']
+    .map(k => parseInt(char[k]) || 0);
+  const statSum = statVals.reduce((a, b) => a + b, 0);
+  const statMax = Math.max(...statVals);
+  let powerLevel;
+  if (statSum >= 60) powerLevel = 'Cosmic';
+  else if (statMax >= 11 || statSum >= 56) powerLevel = 'Extreme Meta';
+  else if (statMax >= 10 || statSum >= 52) powerLevel = 'High Meta';
+  else if (statMax >= 9 || statSum >= 48) powerLevel = 'Mid Meta';
+  else if (statMax >= 8 || statSum >= 44) powerLevel = 'Low Meta';
+  else if (statMax >= 7 || statSum >= 40) powerLevel = 'Elite Human';
+  else if (statSum >= 36) powerLevel = 'Expert Human';
+  else powerLevel = 'Normal Human';
+  document.getElementById('abilPowerLevel').textContent = powerLevel;
+}
+    
     async function loadCharacters() {
   try {
     let query = supabaseClient.from('mhr_characters').select('*');
