@@ -952,23 +952,6 @@ uploadBtn.innerHTML = '<i class="fa-solid fa-image"></i>';
 uploadBtn.title = 'Upload image';
 portraitEl.appendChild(uploadBtn);
 
-// URL input (bottom)
-const urlInput = document.createElement('input');
-urlInput.type = 'text';
-urlInput.className = 'edit-input';
-urlInput.placeholder = 'Image URL';
-urlInput.value = char.pic_url || '';
-urlInput.style.position = 'absolute';
-urlInput.style.bottom = '4px';
-urlInput.style.left = '4px';
-urlInput.style.right = '4px';
-urlInput.style.width = 'calc(100% - 8px)';
-urlInput.addEventListener('input', () => {
-  isDirty = true;
-  portraitEl.style.backgroundImage = urlInput.value ? `url('${urlInput.value}')` : '';
-});
-portraitEl.appendChild(urlInput);
-
 // Wire up upload
 uploadBtn.addEventListener('click', (e) => {
   e.preventDefault();
@@ -984,7 +967,7 @@ fileInput.addEventListener('change', async () => {
   uploadBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
 
   const ext = file.name.split('.').pop();
-  const path = `${char.id}/${Date.now()}.${ext}`;
+  const path = `${char.name}.${ext}`;
 
   const { error: upErr } = await supabaseClient.storage
     .from('mhr_pics')
@@ -1002,8 +985,8 @@ fileInput.addEventListener('change', async () => {
     .getPublicUrl(path);
 
   const publicUrl = urlData.publicUrl;
-  urlInput.value = publicUrl;
-  portraitEl.style.backgroundImage = `url('${publicUrl}')`;
+characters[currentIndex].pic_url = publicUrl;
+portraitEl.style.backgroundImage = `url('${publicUrl}')`;
   isDirty = true;
 
   uploadBtn.classList.remove('uploading');
@@ -1334,7 +1317,7 @@ document.getElementById('btnSaveEdit').addEventListener('click', async () => {
     power_origin: getMulti('power_origin'),
     short_bio: document.querySelector('#bioBackground .edit-textarea')?.value || null,
     powers: document.querySelector('#powerText .edit-textarea')?.value || null,
-    pic_url: document.querySelector('.sheet-portrait .edit-input')?.value || null,
+    pic_url: characters[currentIndex].pic_url || null,
     created_by: document.querySelector('#sheetCredit .edit-input')?.value || null,
     strength: parseInt(characters[currentIndex].strength) || 0,
     durability: parseInt(characters[currentIndex].durability) || 0,
