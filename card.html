@@ -514,11 +514,24 @@
 }
 
 #topBarTitle {
-  font-family: 'Courier New', 'Courier', monospace;
-  font-size: 26px;
-  letter-spacing: 0.12em;
+  font-family: Arial, sans-serif;
   color: #bbb;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+#topBarTitle .olympus {
+  font-size: 28px;
   font-weight: bold;
+}
+
+#topBarTitle .fullname {
+  font-size: 7px;
+  font-weight: bold;
+  text-transform: uppercase;
+  line-height: 1.4;
 }
 
 .custom-multiselect-panel label:hover {
@@ -543,7 +556,10 @@
 <body>
 
 <div id="topBar">
-  <span id="topBarTitle">O.L.y <span style="text-transform:uppercase">M</span>.P.U.S. Metahuman Registry</span>
+  <span id="topBarTitle">
+  <span class="olympus">OLYMPUS</span>
+  <span class="fullname">OFFICE FOR THE LEGISLATIVE<br>MANAGEMENT OF POWERS<br>IN THE UNITED STATES</span>
+</span>
   <button id="btnLogin" onclick="handleLogin()">
     <i class="fa-brands fa-github"></i>
   </button>
