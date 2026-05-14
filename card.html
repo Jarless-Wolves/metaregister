@@ -14,16 +14,16 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      background: #496381;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      font-family: 'Barlow Condensed', sans-serif;
-      gap: 48px;
-      flex-wrap: wrap;
-      padding: 76px 40px 40px 40px;
-    }
+  background: #496381;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  font-family: 'Barlow Condensed', sans-serif;
+  gap: 48px;
+  flex-wrap: wrap;
+  padding: 152px 40px 40px 40px;
+}
 
     /* === CARDS === */
     .card {
@@ -546,6 +546,23 @@
   height: 100%;
   min-height: 29em;
 }
+
+#missionBar {
+  position: fixed;
+  top: 72px;
+  left: 0;
+  width: 100%;
+  background: #0e1a2b;
+  color: #ccc;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 11px;
+  padding: 6px 24px;
+  border-top: 2px solid #8b0000;
+  border-bottom: 2px solid #8b0000;
+  z-index: 49;
+  text-align: center;
+  line-height: 1.5;
+}
   </style>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -562,6 +579,10 @@
   <button id="btnLogin" onclick="handleLogin()">
     <i class="fa-brands fa-github"></i>
   </button>
+</div>
+  
+<div id="missionBar">
+  The Metahuman Registry is maintained by the Office for the Legislative Management of Powers in the United States as an instrument of public safety in accordance with The Adamantine Restraint Act of 2008, 42 U.S.C. § 2008 et seq. All metahumans operating within U.S. jurisdiction and actively expressing their abilities are subject to mandatory registration, monitoring, and oversight. Registration is not optional. It is the law.
 </div>
   
   <div class="modal-overlay" id="modalOverlay">
