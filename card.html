@@ -561,6 +561,20 @@
   text-align: left;
   line-height: 1.5;
 }
+
+    #pageFooter {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #1a1a1a;
+  color: #666;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  text-align: center;
+  padding: 6px 16px;
+  z-index: 50;
+}
   </style>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -1540,5 +1554,8 @@ document.getElementById('btnCancelEdit').addEventListener('click', () => {
 
     initAuth();
   </script>
+  <div id="pageFooter">
+    OLYMPUS™ and the OLYMPUS Metahuman Registry are fictional creations. Any resemblance to actual government agencies or persons is coincidental. OLYMPUS has no affiliation with the United States government or any actual federal body. OLYMPUS™ is a trademark of David M. Arnold. All characters and content © 2026 David M. Arnold. All rights reserved.
+  </div>
 </body>
 </html>
